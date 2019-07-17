@@ -1,0 +1,19 @@
+image: alpine:latest
+
+before_script:
+  - apk update && apk add openssl hugo
+
+test:
+  script:
+  - hugo
+  except:
+  - master
+pages:
+  script:
+  - hugo
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
