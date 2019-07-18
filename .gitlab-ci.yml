@@ -1,7 +1,21 @@
-before_script:
-  - whoami
+stages:
+  - build
+  - deploy
 
-test:
+job 1:
+  stage: build
+  script: whoami
+
+job 2:
+  stage: build
+  script: hugo
+
+job 3:
+  stage: deploy
   script:
-  - hugo
-
+    - echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
+    - cd public
+    - git add -A
+    - git commit -m "rebuilding site `date`"
+    - git push --force -u origin master
+    - cd ..
