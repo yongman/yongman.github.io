@@ -2,10 +2,6 @@ stages:
   - build
   - deploy
 
-job 1:
-  stage: build
-  script: whoami
-
 job 2:
   stage: build
   script:
@@ -19,6 +15,9 @@ job 3:
     - pwd
     - cd public
     - git add -A
+    - git config user.name "yongman"
+    - git config user.email "yming0221@gmail.com"
     - git commit -m "rebuilding site `date`"
+    - git remote add origin git@github.com:yongman/yongman.github.io.git
     - git push --force -u origin master
     - cd ..
