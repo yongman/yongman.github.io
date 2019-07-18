@@ -9,12 +9,12 @@ job 1:
 job 2:
   stage: build
   script:
-    - hugo
-    - pwd
+    - hugo version
 
 job 3:
   stage: deploy
   script:
+    - hugo
     - echo -e "Deploying updates to GitHub..."
     - pwd
     - cd public
