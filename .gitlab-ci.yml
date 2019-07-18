@@ -19,7 +19,7 @@ job 3:
     - git add -A
     - git config user.name "yongman"
     - git config user.email "yming0221@gmail.com"
-    - git commit -m "rebuilding site `date`"
+    - git commit -m "rebuilding site `TZ="Asia/Shanghai" date +"%Y-%m-%d %H:%M:%S"`"
     - git remote add origin git@github.com:yongman/yongman.github.io.git
     - git push --force -u origin master
     - cd ..
