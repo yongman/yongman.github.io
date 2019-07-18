@@ -13,7 +13,7 @@ date: 2019-07-18T16:28:13+08:00
 
 还是决定转hugo了，对比hexo来说真是太省事了，没有依赖，一个bin文件就能全部搞定，并且静态资源生成的速度和hexo不在一个量级。
 
-hugo下用了xianmin的[jene主题](https://github.com/xianmin/hugo-theme-jane)，一如既往的简洁清爽，专注阅读。
+hugo下用了xianmin的[jane主题](https://github.com/xianmin/hugo-theme-jane)，一如既往的简洁清爽，专注阅读。
 
 对于托管在github pages的静态网站，当突然想写几句话的时候，要从上一次的源文件环境或者是同步过的环境中继续，否则就导致文章丢失，所以用hexo和hugo写文章的体验最差的就是环境的同步。
 
