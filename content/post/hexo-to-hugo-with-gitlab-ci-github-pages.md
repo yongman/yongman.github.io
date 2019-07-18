@@ -2,9 +2,8 @@
 title: hexo迁移hugo并配置ci自动部署github pages
 categories: ["生命不息"]
 tags: ["hugo","gitlab","ci","hexo"]
-date: 2019-07-18 14:14:00
+date: 2019-07-18T16:28:13+08:00
 ---
-
 
 
 最近一直收到github pages的通知，由hexo生成的静态站存在安全风险，要求升级，升级hexo会升级一大堆依赖node_modules，对于node小白来说一直没有进行升级。
