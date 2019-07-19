@@ -2,15 +2,19 @@ stages:
   - build
   - deploy
 
-job 2:
+build:
   stage: build
+  artifacts:
+    untracked: true
   script:
     - hugo version
-
-job 3:
-  stage: deploy
-  script:
     - hugo
+
+deploy:
+  stage: deploy
+  dependencies:
+    - build
+  script:
     - echo -e "Deploying updates to GitHub..."
     - pwd
     - cd public
