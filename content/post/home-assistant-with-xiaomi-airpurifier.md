@@ -2,6 +2,7 @@
 title: 玩转Home Assistant - 集成小米空气净化器、米家智能家居、broadlink等设备
 categories:
   - [生命不息]
+tags: ["homeassistant","synology"]
 date: 2018-11-15 01:27:53
 ---
 
@@ -142,15 +143,16 @@ sensor:
   homekit的接入非常简单，home assistant已经内置home bridge，直接在配置文件中添加`homekit:`项，即可自动添加homekit支持，不再需要额外安装homebridge和各种配置。
 
 **参考**
-1. [Home Assistant](https://www.home-assistant.io/)
-2. [Installation on Docker - Home Assistant](https://www.home-assistant.io/docs/installation/docker/)
-3. [Template Sensor - Home Assistant](https://www.home-assistant.io/components/sensor.template/)
-4. [ha 接入设备汇总 -『HomeAssistant』智能硬件讨论区](https://bbs.hassbian.com/thread-4625-1-1.html)
-5. [HomeAssistant联动HomeKit \| 某不科学的博客](https://mou.science/2018/07/22/homeassistant-2/)
-6. [HomeKit - Home Assistant](https://www.home-assistant.io/components/homekit/)
-7. [小度音箱接入HomeAssistant 采用自带OAuth访问控制](https://bbs.hassbian.com/thread-5417-1-1.html)
-8. [GitHub - zhkufish/homeassistant-dueros](https://github.com/zhkufish/homeassistant-dueros)
-9. [Memory leak - camera/synology](https://github.com/home-assistant/home-assistant/issues/9352)
-10. [微改虫子DLNA，让小度上岗](https://bbs.hassbian.com/thread-4734-1-1.html)
-11. [小度使用baidu的tts，输入文字后无法自动播放，必须点播放](https://bbs.hassbian.com/thread-6260-2-1.html)
+
+1. [Home Assistant](https://www.home-assistant.io/) 
+2. [Installation on Docker - Home Assistant](https://www.home-assistant.io/docs/installation/docker/) 
+3. [Template Sensor - Home Assistant](https://www.home-assistant.io/components/sensor.template/) 
+4. [ha 接入设备汇总 -『HomeAssistant』智能硬件讨论区](https://bbs.hassbian.com/thread-4625-1-1.html) 
+5. [HomeAssistant联动HomeKit \| 某不科学的博客](https://mou.science/2018/07/22/homeassistant-2/) 
+6. [HomeKit - Home Assistant](https://www.home-assistant.io/components/homekit/) 
+7. [小度音箱接入HomeAssistant 采用自带OAuth访问控制](https://bbs.hassbian.com/thread-5417-1-1.html) 
+8. [GitHub - zhkufish/homeassistant-dueros](https://github.com/zhkufish/homeassistant-dueros) 
+9. [Memory leak - camera/synology](https://github.com/home-assistant/home-assistant/issues/9352) 
+10. [微改虫子DLNA，让小度上岗](https://bbs.hassbian.com/thread-4734-1-1.html) 
+11. [小度使用baidu的tts，输入文字后无法自动播放，必须点播放](https://bbs.hassbian.com/thread-6260-2-1.html) 
 
