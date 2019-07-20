@@ -48,4 +48,45 @@ job 2:
 ```
 在执行之前，需要将该docker中对应用户的ssh rsa.pub添加到github的ssh中。
 
+但是上述gitlab-ci.yml配置的ci就是每次都是全量force push，当文章过多或者静态文件过多，每次小的改动进行全量push会非常浪费时间，并且没有commit log可以追溯。所以又修改了一版gitlab-ci.yml配置。
+
+```
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - public
+  script:
+    - hugo version
+    - hugo
+
+deploy:
+  stage: deploy
+  dependencies:
+    - build
+  cache:
+    paths:
+      - yourname.github.io
+  script:
+    - if [ ! -d "yourname.github.io" ];then git clone git@github.com:yourname/yourname.github.io.git;else cd yourname.github.io && git pull && cd -;fi
+    - echo "Deploying updates to GitHub..."
+    - pwd
+    - rm yourname.github.io/* -r
+    - cp public/* yourname.github.io/ -r
+    - cd yourname.github.io
+    - git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no' 
+    - git add -A
+    - git config user.name "yourname"
+    - git config user.email "youremail@gmail.com"
+    - git commit -m "rebuilding site `TZ="Asia/Shanghai" date +"%Y-%m-%d %H:%M:%S"`" || true
+    - git push --force -u origin master
+    - cd ..
+```
+
+这样会在runner的本地环境缓存github pages的repo信息，每次将hugo生成的public内容全量替换进去，git提交的时候只会提交相应的变动，即节省时间也节省github的资源。
+
 随时随地在gitlab的WebIDE中新建markdown，保存后会自动更新到github pages，终于不再受终端限制了。
