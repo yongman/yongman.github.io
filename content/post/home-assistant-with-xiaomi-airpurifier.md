@@ -1,8 +1,8 @@
 ---
-title: 玩转Home Assistant - 集成小米空气净化器、米家智能家居、broadlink等设备
+title: 玩转Home Assistant - 集成小米空气净化器、米家智能家居、broadlink设备、dueros、google assistant等
 categories:
   - [生命不息]
-tags: ["homeassistant","synology"]
+tags: ["homeassistant","synology","google assistant"]
 date: 2018-11-15 01:27:53
 ---
 
@@ -126,11 +126,13 @@ sensor:
 3. 通过HAdashboard更形象的展示和进行控制
 4. ~~通过传感器数据实现各种自动化~~
 5. ~~尝试接入小度音箱(因为我只有一个小度音箱)~~
-6. 更多玩法有待探索...(探索中)
+6. ~~接入google assistant~~
+7. 更多玩法有待探索...(探索中)
 
 ==========
 **更新**
 
+- 2019-08-12: homeassistant可以完美的通过ios的家庭应用接入，android平台下的google home也可以通过类似dueros的方式免费接入，可以提供系统级的操控体验。参考文档：[homeassistant官方文档](https://www.home-assistant.io/components/google_assistant/)和[ha接入google assitant几种方式](https://www.smarthomebeginner.com/configure-google-assistant-for-home-assistant/)。上个截图。![](https://raw.githubusercontent.com/yongman/i/img/picgo/20190812230541.png)![](https://raw.githubusercontent.com/yongman/i/img/picgo/20190812230612.png)
 - 2019-05-28: 很久没有折腾了，已经是稳定状态，上个截图。![](https://raw.githubusercontent.com/yongman/i/img/picgo/20190528090105.png)
 - 2019-03-17: HA直接通过小度音箱DLNA和百度的TTS实现了TTS输出，不需要有线或蓝牙连接其他输出设备。不过看到有人说升级了小度的最新固件后即使播放完成，media_player的状态无法自动恢复到idle，[这里](https://github.com/yongman/homeassistant-components/commit/1bd0bfcb3eb0efa94064cb2ceb712ca2d2aa16e0)通过在更新状态的时候判断播放位置是否达到最后来强制结束设备播放状态，可以完成更多的自动化语音提醒功能。
 - 2019-03-17: 改装双控墙壁开关，增加客厅和餐厅灯的控制，并接入小度音箱，在没有测电笔的情况下通过试验，搞清楚了双控两路负载线、火线和其他多个灯负载线的分布，并重新排了墙壁开关的顺序。
