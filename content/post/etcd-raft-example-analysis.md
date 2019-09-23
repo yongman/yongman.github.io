@@ -15,7 +15,7 @@ date: 2019-09-22 21:00:38
 
 raftexample就是一个最简单的使用示例，它实现的是一个简单的内存kv存储，通过HTTP API访问。
 
-1. 初始化
+##### 1. 初始化
 
 由于raft库只实现核心逻辑，所以需要与应用进行交互。其交互采用4个channel：
 
@@ -56,7 +56,7 @@ func newRaftNode(id int, peers []string, join bool, getSnapshot func() ([]byte, 
 }
 ```
 
-2. 启动raftNode
+##### 2. 启动raftNode
 
 在初始化的时候通过`rc.startRaft()`启动raft组件。
 
@@ -194,7 +194,7 @@ func (rc *raftNode) serveChannels() {
 
 通过监听commitC中的数据，最后完成数据写入状态机。
 
-3. 数据写入
+##### 3. 数据写入
 
 整个的数据写入过程：
 
