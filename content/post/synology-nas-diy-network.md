@@ -158,3 +158,6 @@ dmesg -T看到有kernel panic输出：
 ```
 
 安装后发现以前使用的sn和mac无效了，估计被封了，主要是使用ds video的硬件转码加速功能，所以还是需要个合法的sn来开启硬件转码功能。这里使用的是复制ddsm中的序列号到grub中，修改grub重启，硬件转码功能正常。以后坚决不做小白鼠！！！
+
+`2019-10-08` 关于群晖虚拟机跑软路由的问题基本上定位到只VMM的驱动问题，最后还是将网络方案和NAS分开了，软路由采用了3205U工控机+8G内存+64G SSD，软件采用PVE+ikuai+lede双软路由组合，支持网卡直通，再也不怕大流量下载了。
+![](https://raw.githubusercontent.com/yongman/i/img/picgo/20191016201159.png)
