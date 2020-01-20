@@ -19,18 +19,18 @@ date: 2020-01-15 17:53:38
 
 ![](https://raw.githubusercontent.com/yongman/i/img/picgo/20200116163848.png)
 
-1. 架构的最上层是服务化组件，包括查询优化器、元数据存储、鉴权、资源管理和事务管理等。
+**1.架构的最上层是服务化组件，包括查询优化器、元数据存储、鉴权、资源管理和事务管理等。**
 
 - 查询优化器：实现查询的管理和优化，将对应的查询计划分发Virtual Warehouse中特定的计算节点，为了提高cache效率和性能，优化器会对其中的节点进行类似一致性hash的管理。
 - 事务管理：采用SI和MVCC进行的并发控制，整体的存储思想类似于LSM，数据不会原地修改，数据只能读取修改后整块写入，历史版本可以保留，SI的实现也是基于MVCC来实现的。
 
-2. 中间是计算层Virtual Warehouse
+**2.中间是计算层Virtual Warehouse**
 
 本质就是vm计算资源，多个vm虚拟机资源加速本地的磁盘做cache就构成了逻辑上的一个虚拟的warehouse，其中做了cache命中率优化和类似的文件p2p分发，减轻存储层访问压力，提升性能。
 
 最下层是存储层
 
-3. 存储层
+**3.存储层**
 
 存储层使用的云上的对象存储，aws的s3，azure的blob和google的cloud storage。对象存储系统的接口很简单，基本上都是GET/DELETE/PUT三种，s3支持部分数据获取。snowflake数据chunk的存储也是采用range-based来存储，元数据依赖cloud service保存。
 
