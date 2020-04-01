@@ -1,6 +1,9 @@
 ---
 title: 再看Redis数据过期
-categories: [技术记录]
+categories: 
+  - [技术记录]
+  - [存储]
+tags: ["redis"]
 date: 2020-04-01 07:00:00
 ---
 
