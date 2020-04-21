@@ -1,7 +1,7 @@
 ---
 title: 记一次Redis超时抖动问题排查
 categories: [存储]
-tags: ["redis"， "k8s", "wireshark"]
+tags: ["redis","k8s","wireshark"]
 date: 2020-04-21 23:00:00
 ---
 
