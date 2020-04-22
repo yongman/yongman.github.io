@@ -185,7 +185,7 @@ func randStr(n int) string {
 
 通过查看pod中`cat /sys/fs/cgroup/cpu,cpuaact/cpu.stat`查看统计信息，的确存在很多cpu throttle计数，说明的确cgroup限制了进程的正常调度。理论上在cpu很空闲的情况下，cpu时间片足够处理这么简单请求，不应该被throttle。
 
-k8s中的[issue](https://github.com/kubernetes/kubernetes/issues/67577)信息中，提到这个是内核的一个bug，会导致limit限制调度准确，导致正常情况的进程被频繁重新调度。此bug在内核`linux-kernel 4.18`中已经修复。
+k8s中的[issue](https://github.com/kubernetes/kubernetes/issues/67577)信息中，提到这个是内核的一个bug，会导致limit限制调度不准确，导致正常情况的进程被频繁重新调度。此bug在内核`linux-kernel 4.18`中已经修复。
 
 - 去掉cgroup cpu limit限制
 
