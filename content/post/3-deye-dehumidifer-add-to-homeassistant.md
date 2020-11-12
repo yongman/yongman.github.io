@@ -1,7 +1,7 @@
 ---
 title: 德业除湿机接入HomeAssistant
 categories: [技术记录]
-tags: ["homeassistant”]
+tags: ["homeassistant"]
 date: 2020-11-12 00:00:00
 ---
 
