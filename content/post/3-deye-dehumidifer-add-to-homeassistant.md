@@ -61,7 +61,7 @@ APK反编译。
 
 返回的是认证token和clientid。
 
-后续的http接口使用改token进行认证即可。
+后续的http接口使用该token进行认证即可。
 
 **获取设备列表**
 
