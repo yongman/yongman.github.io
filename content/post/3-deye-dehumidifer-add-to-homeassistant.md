@@ -233,7 +233,9 @@ mqtt:
   password: !secret mqtt_password
 ```
 
-增加switch配置，其中topic的名称就是mqttinfo中的`loginname/deviceid/status/hex`和`loginname/deviceid/command/hex`。
+增加switch配置，其中topic的名称就是mqttinfo中的`mqtt_endpoint/productid/deviceid/status/hex`和`mqtt_endpoint/productid/deviceid/command/hex`。
+
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20201219151502.png)
 
 ```yaml
 switch:
