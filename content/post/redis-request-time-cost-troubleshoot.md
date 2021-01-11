@@ -181,7 +181,12 @@ func randStr(n int) string {
 
 - k8s pod cpu limit?
 
-![](https://raw.githubusercontent.com/yongman/i/img/picgo/20200421234115.png)
+```shell
+$ cat /sys/fs/cgroup/cpu,cpuaact/cpu.stat
+nr_periods 45474775
+nr_throttled 281291
+throttled_time 21533704485135
+```
 
 通过查看pod中`cat /sys/fs/cgroup/cpu,cpuaact/cpu.stat`查看统计信息，的确存在很多cpu throttle计数，说明的确cgroup限制了进程的正常调度。理论上在cpu很空闲的情况下，cpu时间片足够处理这么简单请求，不应该被throttle。
 
