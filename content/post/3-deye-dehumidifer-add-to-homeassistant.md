@@ -46,6 +46,10 @@ APK反编译。
 
 通过源码中的逻辑，可以看到登陆的url和参数，填入对应的参数后登陆，OK。
 
+其中pushtype和extend字段按下面方式填写即可。
+
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20210131130221.png)
+
 ```json
 {
     "meta": {
