@@ -266,3 +266,7 @@ switch:
 ![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20201112172028.png)
 
 
+**更新**
+
+更新homeassistant到`2021.3.4`版本后mqtt不兼容，需要从`2021.3.4`版本mqtt中进行二次更改，由于mqtt publish服务的参数类型变化，原来的二进制payload方式失效，将该部分逻辑从`switch.py`转移到`__init__.py`中，具体可以看已经修改过的mqtt代码。
+[https://github.com/yongman/homeassistant-components/tree/master/mqtt](https://github.com/yongman/homeassistant-components/tree/master/mqtt)
