@@ -7,7 +7,7 @@ date: 2021-06-20 00:00:00
 
 一般IPTV只能实现单个设备播放，一个宽带也只能接入一个IPTV，如果加中有多个设备需要同时播放电视直播，就无法实现了。
 
-当然可以通过在网上找一些有人精心维护的m3u直播源来实现直播，下面的开放源用过一段时间，维护的及时性不错 https://github.com/biancangming/wtv/wiki/%E6%9C%80%E6%96%B0IPTV%E7%9B%B4%E6%92%AD%E6%BA%90m3u8%E4%B8%8B%E8%BD%BD%EF%BC%8C%E7%94%B5%E8%A7%86%E7%9B%B4%E6%92%AD%E7%BD%91%E7%AB%99%E6%8E%A8%E8%8D%90
+当然可以通过在网上找一些有人精心维护的m3u直播源来实现直播，下面的开放源用过一段时间，维护的及时性不错, [m3u源地址](https://github.com/biancangming/wtv/wiki/%E6%9C%80%E6%96%B0IPTV%E7%9B%B4%E6%92%AD%E6%BA%90m3u8%E4%B8%8B%E8%BD%BD%EF%BC%8C%E7%94%B5%E8%A7%86%E7%9B%B4%E6%92%AD%E7%BD%91%E7%AB%99%E6%8E%A8%E8%8D%90)
 
 但是使用过程中经常会有卡顿的现象，还是决定使用运营商提供的直播源。
 
