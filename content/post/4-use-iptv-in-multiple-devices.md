@@ -498,6 +498,32 @@ ip rule add from 192.168.31.0/24 to 115.233.200.0/24 table 100
 ip route add default via 10.234.192.1 dev eth2 table 100
 ```
 
+为了使上面的路由规则能够不丢失，在路由器重新启动或者在iptv网口产生了上下线事件后仍然能够自动应用上述规则，需要将上述规则添加到文件`/lib/netifd/dhcp.script`。
+
+``` shell
+vi /lib/netifd/dhcp.script
+
+//在函数setup_interface()最后增加如下代码
+	# add telecom iptv route
+	if [ "$INTERFACE" = "IPTV" ]; then
+		ip rule flush table 100
+		ip route flush table 100
+		ip rule add from 192.168.31.0/24 to 61.130.57.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 61.130.250.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 61.130.56.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 115.233.40.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 115.233.41.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 115.233.45.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 122.229.6.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 122.229.17.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 220.191.136.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 115.233.1.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 115.233.200.0/24 table 100
+		ip route add default via 10.234.192.1 dev eth2 table 100
+		echo "refresh iptv iptable rules"
+	fi
+```
+
 #### 4. 多设备播放
 
 多设备播放采用了Plex + xteve(ffmpeg) + docker，具体可以搜索相关内容。
