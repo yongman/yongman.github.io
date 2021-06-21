@@ -1,7 +1,7 @@
 ---
-title: 抓包获取源地址实现IPTV任意设备播放
+title: 电信宽带电视IPTV公网内网多设备播放
 categories: [技术记录]
-tags: ["iptv","plex","抓包"]
+tags: ["iptv","plex","tcpdump"]
 date: 2021-06-20 00:00:00
 ---
 
