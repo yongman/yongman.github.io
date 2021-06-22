@@ -5,7 +5,7 @@ tags: ["iptv","plex","tcpdump"]
 date: 2021-06-20 00:00:00
 ---
 
-![](https://raw.githubusercontent.com/yongman/i/img/picgo/20210620153019.png)
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20210620153019.png)
 
 一般IPTV只能实现单个设备播放，一个宽带也只能接入一个IPTV，如果加中有多个设备需要同时播放电视直播，就无法实现了。
 
@@ -95,21 +95,21 @@ vi /lib/netifd/proto/dhcp.sh
 
 /etc/init.d/network restart
 
-![](https://raw.githubusercontent.com/yongman/i/img/picgo/20210620144930.png)
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20210620144930.png)
 
 注意给IPTV网卡单独创建防火墙区域并设置转发出站入栈规则，并且需要开启IP动态伪装和NAT。
 
-![](https://raw.githubusercontent.com/yongman/i/img/picgo/20210620150251.png)
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20210620150251.png)
 
 ### 2. 抓包分析播放源
 
 可以在使用第一步的抓包结果，过滤出http协议，然后搜索关键字'SetConfig'，可以定位到相应的HTTP请求
 
-![](https://raw.githubusercontent.com/yongman/i/img/picgo/20210620145559.png)
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20210620145559.png)
 
 右键选择Follow http stream，就可以看到具体的直播地址列表。
 
-![](https://raw.githubusercontent.com/yongman/i/img/picgo/20210620145746.png)
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20210620145746.png)
 
 格式化成m3u格式列表如下，这里用的rtsp单播地址：
 
@@ -530,7 +530,7 @@ vi /lib/netifd/dhcp.script
 
 Plex的优点是跨平台，界面优美，多设备同步，可玩性强，不过Plex需要Plex pass会员，有条件的可以直接购买终生会员。
 
-![](https://raw.githubusercontent.com/yongman/i/img/picgo/20210620151014.png)
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20210620151014.png)
 
 **参考**
 
