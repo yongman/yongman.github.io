@@ -505,23 +505,35 @@ vi /lib/netifd/dhcp.script
 
 //在函数setup_interface()最后增加如下代码
 	# add telecom iptv route
-	if [ "$INTERFACE" = "IPTV" ]; then
+	if [ "$INTERFACE" = "IPTV" -a "$1" = "bound" ]; then
 		ip rule flush table 100
 		ip route flush table 100
-		ip rule add from 192.168.31.0/24 to 61.130.57.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 61.130.250.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 61.130.56.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 115.233.40.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 115.233.41.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 115.233.45.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 122.229.6.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 122.229.17.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 220.191.136.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 115.233.1.0/24 table 100
-		ip rule add from 192.168.31.0/24 to 115.233.200.0/24 table 100
+		ip rule add from 192.168.31.0/24 to 61.130.57.0/24 table 100 prio 900
+		ip rule add from 192.168.31.0/24 to 61.130.250.0/24 table 100 prio 901
+		ip rule add from 192.168.31.0/24 to 61.130.56.0/24 table 100 prio 902
+		ip rule add from 192.168.31.0/24 to 115.233.40.0/24 table 100 prio 903
+		ip rule add from 192.168.31.0/24 to 115.233.41.0/24 table 100 prio 904
+		ip rule add from 192.168.31.0/24 to 115.233.45.0/24 table 100 prio 905
+		ip rule add from 192.168.31.0/24 to 122.229.6.0/24 table 100 prio 906
+		ip rule add from 192.168.31.0/24 to 122.229.17.0/24 table 100 prio 907
+		ip rule add from 192.168.31.0/24 to 220.191.136.0/24 table 100 prio 908
+		ip rule add from 192.168.31.0/24 to 115.233.1.0/24 table 100 prio 909
+		ip rule add from 192.168.31.0/24 to 115.233.200.0/24 table 100 prio 910
 		ip route add default via 10.234.192.1 dev eth2 table 100
 		echo "refresh iptv iptable rules"
 	fi
+
+
+// 在函数外，找到调用上面函数的入口，将参数传入，传入renew还是bound事件类型，避免频繁添加路由
+case "$1" in
+	deconfig)
+		deconfig_interface
+	;;
+	renew|bound)
+		setup_interface $1
+	;;
+esac
+
 ```
 
 #### 4. 多设备播放
