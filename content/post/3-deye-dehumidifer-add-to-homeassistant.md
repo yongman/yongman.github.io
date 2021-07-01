@@ -146,7 +146,9 @@ payload = struct.pack('10b', 8,2,0,0,30,0,0,0,0,0) // 关闭开关控制数据
 
 #### 2. 集成到homeassistant
 
-homeassistant对于mqtt的设备已经支持，只是目前的mqtt设备发送的控制payload无法通过yaml配置二进制数据，只能进行二次开发。
+homeassistant对于mqtt的设备已经支持，~~只是目前的mqtt设备发送的控制payload无法通过yaml配置二进制数据，只能进行二次开发~~。
+
+德业TA22型号除湿机可以参考issue， https://github.com/yongman/homeassistant-components/issues/2 可以不用修改mqtt组件源码。
 
 **1.复制components中的mqtt模块到custom_components，系统启动时会优先在custom_components中加载mqtt模块，覆盖系统自带的mqtt集成模块。**
 
