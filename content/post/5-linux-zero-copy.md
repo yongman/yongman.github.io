@@ -63,4 +63,6 @@ sendfile(socket, file, len);
 
 完成数据的发送，整个过程中不需要用户进程执行CPU拷贝数据，减少进程上下文切换。
 
+**参考**
 
+1. https://www.linuxjournal.com/article/6345
