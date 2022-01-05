@@ -63,6 +63,15 @@ sendfile(socket, file, len);
 
 完成数据的发送，整个过程中不需要用户进程执行CPU拷贝数据，减少进程上下文切换。
 
+其实这并不是真正零拷贝技术，因为其实数据从内核态还是依赖CPU进行了数据拷贝，真正的零拷贝是在支持SG-DMA（The scatter-Gather Direct Memory Access）技术，可以进一步减少通过CPU把内核缓冲区里的数据拷贝到socket缓冲区的过程。
+
+从Linux 2.4版本开始，对于支持SG-DMA技术的情况下，sendfile()系统调用的过程如下：
+
+![](https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20220105230009.png)
+
+整个过程完全不需要CPU参与数据拷贝，两次都由DMA直接搬运。
+
 **参考**
 
 1. https://www.linuxjournal.com/article/6345
+2. 图解系统-小林coding
