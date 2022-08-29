@@ -1,0 +1,354 @@
+<!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<title>黑群晖Synology DS918+打造个人网络媒体中心 - 人生如逆旅，我亦是行人。</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,user-scalable=yes">
+<meta name=MobileOptimized content="width">
+<meta name=HandheldFriendly content="true">
+<meta name=applicable-device content="pc,mobile">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=mobile-web-app-capable content="yes">
+<meta name=author content="yongman">
+<meta name=description content="还记得几年前，一个机缘巧合，碰到有同学利用台式机安装了一个黑群晖，当时自己也将废弃在角落08年的联想笔记本成功跑了黑群晖，然后继续被仍在房间">
+<meta name=keywords content="yongman,思考,人生,技术">
+<meta name=generator content="Hugo 0.91.2">
+<link rel=canonical href=https://xiking.win/2018/11/05/synology-nas-diy-network/>
+<link rel=icon href=/favicon.ico>
+<link rel=stylesheet href=/sass/jane.min.31c4b7729c8d71cc152f8de4203d90bfd8a04f7eab69372de7234ebf55b7701b.css integrity="sha256-McS3cpyNccwVL43kID2Qv9igT36raTct5yNOv1W3cBs=" media=screen crossorigin=anonymous>
+<link rel=stylesheet href=/css/custom.css>
+<meta property="og:title" content="黑群晖Synology DS918+打造个人网络媒体中心">
+<meta property="og:description" content="还记得几年前，一个机缘巧合，碰到有同学利用台式机安装了一个黑群晖，当时自己也将废弃在角落08年的联想笔记本成功跑了黑群晖，然后继续被仍在房间">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xiking.win/2018/11/05/synology-nas-diy-network/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2018-11-05T23:53:38+00:00">
+<meta property="article:modified_time" content="2018-11-05T23:53:38+00:00">
+<meta itemprop=name content="黑群晖Synology DS918+打造个人网络媒体中心">
+<meta itemprop=description content="还记得几年前，一个机缘巧合，碰到有同学利用台式机安装了一个黑群晖，当时自己也将废弃在角落08年的联想笔记本成功跑了黑群晖，然后继续被仍在房间"><meta itemprop=datePublished content="2018-11-05T23:53:38+00:00">
+<meta itemprop=dateModified content="2018-11-05T23:53:38+00:00">
+<meta itemprop=wordCount content="2705">
+<meta itemprop=keywords content><meta name=twitter:card content="summary">
+<meta name=twitter:title content="黑群晖Synology DS918+打造个人网络媒体中心">
+<meta name=twitter:description content="还记得几年前，一个机缘巧合，碰到有同学利用台式机安装了一个黑群晖，当时自己也将废弃在角落08年的联想笔记本成功跑了黑群晖，然后继续被仍在房间"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>人生如逆旅，我亦是行人。</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/>首页</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/post/>归档</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/tags/>标签</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/categories/>分类</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/about/>关于</a>
+</li>
+</ul>
+</nav>
+<link rel=stylesheet href=/lib/photoswipe/photoswipe.min.css>
+<link rel=stylesheet href=/lib/photoswipe/default-skin/default-skin.min.css>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div>
+<header id=header class="header container">
+<div class=logo-wrapper>
+<a href=/ class=logo>
+人生如逆旅，我亦是行人。
+</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/>首页</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/post/>归档</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/tags/>标签</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/categories/>分类</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/about/>关于</a>
+</li>
+</ul>
+</nav>
+</header>
+<div id=mobile-panel>
+<main id=main class="main bg-llight wallpaper">
+<div class=content-wrapper>
+<div id=content class="content container">
+<article class="post bg-white">
+<header class=post-header>
+<h1 class=post-title>黑群晖Synology DS918+打造个人网络媒体中心</h1>
+<div class=post-meta>
+<time datetime=2018-11-05 class=post-time>
+2018-11-05
+</time>
+<div class=post-category>
+<a href=https://xiking.win/categories/> [生产力] </a>
+<a href=https://xiking.win/categories/> [生命不息] </a>
+</div>
+</div>
+</header>
+<div class=post-content>
+<p>还记得几年前，一个机缘巧合，碰到有同学利用台式机安装了一个黑群晖，当时自己也将废弃在角落08年的联想笔记本成功跑了黑群晖，然后继续被仍在房间的角落。</p>
+<p>当时就被群晖的软件生态吸引了，各种app涵盖了文件管理、照片、视频、各种数据同步等场景。</p>
+<p>趁着房子装修，现在局域网起码也要千兆网络，目前在使用的小米路由器R2D虽然也是千兆，但是网络延迟抖动比较严重，是时候升级了。</p>
+<h3 id=diy>DIY</h3>
+<p>和前同事咨询了一番，也在tg交流群和youtube上了解了一番，决定自己DIY硬件，具体的使用的硬件：</p>
+<ul>
+<li>华擎J4105主板
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/lviGPA8.jpg alt></li>
+<li>迎广MS04机箱 自带电源
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/kTfBhtX.png alt>
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/lx45AQQ.jpg alt></li>
+<li>三星DDR4 8G内存
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/SmAX52G.png alt></li>
+<li>PCIex1双网口千兆网卡
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/FewkC7q.jpg alt></li>
+<li>西数红盘4T
+预算有限，先上一块盘，后续再上
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/8GWerbS.jpg alt></li>
+<li>闪迪酷豆8G U盘引导（真的很小，插到主板上，还真不易被发现）</li>
+</ul>
+<p>硬件就是这样。NAS系统选择还是群晖，安装的是最新版DSM6.2.1。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/Dfe0xIV.png alt></p>
+<p>有Virtual Machine Manager和docker支持，可以虚拟机运行其他系统，考虑到后续升级16G内存的可能，先上单条8G。</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/oAc5z2W.png alt>
+网络拓扑图</p>
+<p>如果让NAS只用作存储有点浪费资源，内存和CPU性能过剩，所以干脆来跑软路由吧。</p>
+<p>在VMM中运行的LEDE软路由，破解移动光猫，设置光猫为桥接模式，光猫负责光纤入户桥接，拨号交给LEDE，拨号成功。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/cYUuDj7.png alt></p>
+<p>移动宽带支持多拨，100M宽带在4拨的情况下，测试能达到300M的带宽。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/4astvzq.png alt>
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/IDNDFfl.png alt></p>
+<p>LEDE自带软件中心，可以直接配置ss相关客户端，实现智能科学上网，不需要再自己折腾脚本。</p>
+<h3 id=遇到的问题>遇到的问题</h3>
+<ol>
+<li>无法启用第三个网卡</li>
+</ol>
+<p>由于DS918+只有两个千兆网卡，所以黑群晖的DS918+系统中对于网卡数据有一定限制，具体表现是ifconfig能看到所有的物理网卡设备eth0、eth1、eth2，启动后只有两个网卡是enable状态，eth2没有启用。</p>
+<p>通过查看/etc/rc.network网络初始化脚本，发现三个网卡其实是都识别的，新插入的网卡会在/etc/sysconfig/network-scripts下生成默认配置文件，每次开机会发现eth2相关的配置总会莫名其妙的被删除，导致无法对eth2网卡初始化。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/DQgCkGL.png alt></p>
+<p>通过<code>dmesg</code>查看，发现奇怪日志：</p>
+<pre tabindex=0><code>2018-11-05T00:35:41+08:00 DiskStation synochecknetworkcfg: synochecknetworkcfg.c:50 unlink [/etc/sysconfig/network-scripts/ifcfg-eth2], max LAN id is [1]
+</code></pre><p>ifcfg-eth2被unlink，最大id是1??? synochecknetworkcfg这个bin文件是c编译的，没有源码也没办法看内部的逻辑，索性想办法把这个check过程去掉。</p>
+<p>找到在文件<code>/etc/init/network.conf</code>中会调用该命令，注释掉。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/QyT1xiI.png alt>
+重启验证，成功识别。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/nvfBGE8.png alt></p>
+<ol start=2>
+<li>lede多拨稳定性</li>
+</ol>
+<p>初次设置多拨成功概率大，重启路由器有一定概率存在部分虚拟wan口拨号失败，未解决。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/6p9bDWo.png alt></p>
+<ol start=3>
+<li>i915显卡驱动加载失败</li>
+</ol>
+<p>dmesg -T看到有kernel panic输出：</p>
+<pre tabindex=0><code>[Wed Dec 12 12:44:30 2018] Call Trace:
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff8140c409&gt;] ? i2c_transfer+0x79/0x90
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa0515da2&gt;] drm_do_probe_ddc_edid+0xc2/0x130 [drm]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa0517360&gt;] drm_get_edid+0x300/0x390 [drm]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa06768bf&gt;] intel_dp_init_connector+0xa7f/0xf00 [i915]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa066b533&gt;] intel_ddi_init+0x383/0x4f0 [i915]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa064952a&gt;] intel_modeset_init+0x15da/0x1a70 [i915]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa0683507&gt;] ? intel_setup_gmbus+0x2e7/0x310 [i915]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa05beccf&gt;] i915_driver_load+0xa0f/0xe00 [i915]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa05c9797&gt;] i915_pci_probe+0x27/0x40 [i915]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff812fc85c&gt;] pci_device_probe+0x8c/0x100
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff813842d1&gt;] driver_probe_device+0x1f1/0x310
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff81384472&gt;] __driver_attach+0x82/0x90
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff813843f0&gt;] ? driver_probe_device+0x310/0x310
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff81382361&gt;] bus_for_each_dev+0x61/0xa0
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff81383d69&gt;] driver_attach+0x19/0x20
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff81383993&gt;] bus_add_driver+0x1b3/0x230
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa06fa000&gt;] ? 0xffffffffa06fa000
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff81384c7b&gt;] driver_register+0x5b/0xe0
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff812fb337&gt;] __pci_register_driver+0x47/0x50
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffffa06fa03e&gt;] i915_init+0x3e/0x45 [i915]
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff810003b6&gt;] do_one_initcall+0x86/0x1b0
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff810dfdd8&gt;] do_init_module+0x56/0x1be
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff810b61ad&gt;] load_module+0x1ded/0x2070
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff810b3510&gt;] ? __symbol_put+0x50/0x50
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff810b65b9&gt;] SYSC_finit_module+0x79/0x80
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff810b65d9&gt;] SyS_finit_module+0x9/0x10
+[Wed Dec 12 12:44:30 2018]  [&lt;ffffffff81567444&gt;] entry_SYSCALL_64_fastpath+0x18/0x8c
+[Wed Dec 12 12:44:30 2018] Code:  Bad RIP value.
+[Wed Dec 12 12:44:30 2018] RIP  [&lt;          (null)&gt;]           (null)
+</code></pre><p>表现就是视频解码无法启用硬件加速，找到的解决方案是：https://bbs.archlinux.org/viewtopic.php?id=198852</p>
+<p>在内核启动时增加参数i915.enable_execlists=0，验证有效，重启内核无panic输出。</p>
+<pre tabindex=0><code>[Sun Dec 30 16:20:51 2018] [drm] Finished loading DMC firmware i915/glk_dmc_ver1_04.bin (v1.4)
+[Sun Dec 30 16:20:52 2018] [drm] failed to retrieve link info, disabling eDP
+[Sun Dec 30 16:20:52 2018] [drm] Initialized i915 1.6.0 20180514 for 0000:00:02.0 on minor 0
+</code></pre><h3 id=使用感受>使用感受</h3>
+<p><code>2018-11-05</code> 系统已经稳定运行一周，网速有改善明显，一个NAS+多个AP完美实现上网，性能堪比专业路由。</p>
+<p><code>2019-01-20</code> 使用一段时间LEDE软路由，在多拨的情况下存在bug，在大流量下载的时候会出现wan口拨号失败掉线的情况，只能重启lede恢复，所以增加了ikuai做多拨主路由，lede做旁路路由，避免出现拨号失败导致的断网问题，跑一段时间看看ikuai稳定性，毕竟ikuai是商用的系统，稳定性应该比lede好得多。双软路网络拓扑图：</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/n0EKgbH.png alt></p>
+<p><code>2019-04-10</code> 使用过程中出现了几次ikuai拨号在大流量的情况下断网的情况，表现是群晖物理网卡正常，但是ikuai的虚拟wan口网络不通，断网情况下ikuai依然会重试拨号，但是出现超时。和之前lede拨号表现一致，只能重启虚拟机恢复。由于lan口和wan口对应的物理网卡是自己插入的pcie双网口网卡，怀疑是pcie网卡虚拟驱动等导致的虚拟网卡停止工作。将ikuai的wan口重新桥接群晖的第三个物理网卡，使用板载网卡进行wan口拨号，后续没再出现断网的情况。</p>
+<p><code>2019-05-11</code>老问题再次复现，添加了下载任务后，出现了ikuai无法拨号的情况，这就说明不是物理网卡驱动的问题。决定升级dsm 6.2.2，最新版本更新了virtual machine manager，都说稳定优先，没有大问题黑群升级大概率会出点问题的。升级后出现的问题：</p>
+<ol>
+<li>依旧无法正常关机。</li>
+<li>开机必须插着vga显示器，显示器可以是关闭状态，不插显示器无法启动。</li>
+<li>i915驱动panic再次出现，添加启动参数方式失效。</li>
+<li>J4105板载网卡无法使用。</li>
+</ol>
+<p>得出了结论就是：等这些问题有了解决方案后，以后无特殊情况以后还是不升级了吧，稳定优先。逃&mldr;</p>
+<p><code>2019-05-25</code> 先说一下半年以来遇到的软路由断网情况没有复现，改动就是去掉了多拨，采用的普通的单拨形式。</p>
+<p>上一周没忍住更新了dsm6.2.2，过了一周终于决定回退6.2.1，回退方式就是格式化<code>/dev/md0</code>分区，然后重启安装。具体步骤：</p>
+<pre tabindex=0><code>1. 创建ubuntu启动盘
+2. 将群晖的loader拔出，插入刚做好的启动盘
+3. 启动ubuntu live
+4. sudo -i
+5. mdadm -Asf &amp;&amp; vgchange -ay
+6. mdadm -AU byteorder /dev/md0 /dev/sda1 /dev/sdb1(具体看自己的raid方式)
+7. mkfs.ext4 /dev/md0
+8. 拔下u盘，插入重新做好的群晖loader
+9. 开始重新安装，这样安装后设置和安装的软件丢失，但是数据不会丢失。
+</code></pre><p>安装后发现以前使用的sn和mac无效了，估计被封了，主要是使用ds video的硬件转码加速功能，所以还是需要个合法的sn来开启硬件转码功能。这里使用的是复制ddsm中的序列号到grub中，修改grub重启，硬件转码功能正常。以后坚决不做小白鼠！！！</p>
+<p><code>2019-10-08</code> 关于群晖虚拟机跑软路由的问题基本上定位到只VMM的驱动问题，最后还是将网络方案和NAS分开了，软路由采用了3205U工控机+8G内存+64G SSD，软件采用PVE+ikuai+lede双软路由组合，支持网卡直通，再也不怕大流量下载了。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/20191016201159.png alt></p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>yongman</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2018-11-05
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>License</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<nav class=post-nav>
+<a class=prev href=/2018/11/06/load-balancer-learn/>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417l277.93508-310.326815c11.338233-12.190647 11.035334-32.285311-.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"/></svg>
+</i>
+<span class="prev-text nav-default">了解负载均衡</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/2018/10/24/redis-bot-cold-data-seperation-new-bio/>
+<span class="next-text nav-default">Redis冷热数据分离混合存储实现 - IO任务异步处理</span>
+<span class="prev-text nav-mobile">Next</span>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697c-11.777231-11.500939-30.216186-10.304694-41.178865 2.712784z"/></svg>
+</i>
+</a>
+</nav>
+</footer>
+</article>
+<div class=disqus-comment>
+<div class=disqus-button id=load_disqus onclick=load_disqus()>
+Show Disqus Comments
+</div>
+<div id=disqus_thread></div>
+<script type=text/javascript>var disqus_config=function(){this.page.url="https://xiking.win/2018/11/05/synology-nas-diy-network/"};function load_disqus(){var a,b;if(window.location.hostname==='localhost')return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='xiking-win',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a),$('#load_disqus').remove()}</script>
+<noscript>Please enable JavaScript to view the
+<a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a>
+</noscript>
+</div>
+</div>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=icon-links>
+<a href=mailto:yming0221@gmail.com rel="me noopener" class=iconfont title=email><svg class="icon" viewBox="0 0 1451 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M664.781909 681.472759.0 97.881301C0 3.997201 71.046997.0 71.046997.0H474.477909 961.649408h399.992405s71.046998 3.997201 71.046998 97.881301L771.345323 681.472759S764.482731 685.154773 753.594283 688.65053V688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858V688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759zm53.281707 130.131124C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633.0 212.052267.0 212.052267V942.809523S0 1024 83.726336 1024H682.532949 753.579947h595.368192C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523V212.052267S893.138176 701.759633 817.019477 767.734955c-39.771477 34.470494-74.671786 43.295855-98.955861 43.868928z"/></svg>
+</a>
+<a href=https://twitter.com/YongXMan rel="me noopener" class=iconfont title=twitter target=_blank><svg class="icon" viewBox="0 0 1264 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M1229.8616 18.043658s-117.852626 63.135335-164.151872 67.344358C960.484169-78.763856 560.627046-7.210476 627.971403 308.466201 278.622548 312.675223 89.216542 47.506814 89.216542 47.506814S-28.636084 236.91282 164.978944 392.646647C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042 50.5082679999998-16.83609 134.688715-143.10676 134.688715-143.10676s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"/></svg>
+</a>
+<a href=https://github.com/yongman rel="me noopener" class=iconfont title=github target=_blank><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M512 12.672c-282.88.0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667.0-12.16-.426667-44.373333-.64-87.04C242.005334 929.664 211.968 830.08 211.968 830.08 188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333.0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333.0.0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667.0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72.0 68.522667-.64 123.562667-.64 140.202666.0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"/></svg>
+</a>
+<a href=https://xiking.win/index.xml rel="noopener alternate" type=application/rss+xml class=iconfont title=rss target=_blank><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"><path d="M819.157333 1024C819.157333 574.592 449.408 204.8.0 204.8V0c561.706667.0 1024 462.293333 1024 1024H819.157333zM140.416 743.04a140.8 140.8.0 01140.501333 140.586667A140.928 140.928.0 01140.074667 1024C62.72 1024 0 961.109333.0 883.626667S62.933333 743.082667 140.416 743.04zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667v-199.04c372.352.0 678.784 306.517333 678.784 678.826667z"/></svg>
+</a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme - <a class=theme-link href=https://github.com/xianmin/hugo-theme-jane>Jane</a>
+</span>
+<span class=copyright-year>
+&copy;
+2018 -
+2022
+<span class=heart>
+<i class=iconfont><svg class="icon" viewBox="0 0 1025 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7.0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1.0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2.0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3.1-42.5-8-83.6-24-122.2z" fill="#8a8a8a"/></svg>
+</i>
+</span><span class=author>
+yongman
+</span></span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35"><path d="M510.866688 227.694839 95.449397 629.218702h235.761562L329.15309 958.01517h362.40389L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777h894.052392v131.813095H63.840492V63.962777zm0 0"/></svg>
+</i>
+</div>
+</div>
+<script type=text/javascript src=/lib/jquery/jquery-3.2.1.min.js></script>
+<script type=text/javascript src=/lib/slideout/slideout-1.0.1.min.js></script>
+<script type=text/javascript src=/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/load-photoswipe.js></script>
+<script type=text/javascript src=/lib/photoswipe/photoswipe.min.js></script>
+<script type=text/javascript src=/lib/photoswipe/photoswipe-ui-default.min.js></script>
+</body>
+</html>

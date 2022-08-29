@@ -1,0 +1,348 @@
+<!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<title>了解负载均衡 - 人生如逆旅，我亦是行人。</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,user-scalable=yes">
+<meta name=MobileOptimized content="width">
+<meta name=HandheldFriendly content="true">
+<meta name=applicable-device content="pc,mobile">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=mobile-web-app-capable content="yes">
+<meta name=author content="yongman">
+<meta name=description content="种类 硬件负载均衡 F5 TP-Link 硬件一般都是定制化，价格比较贵，不太符合互联网公司的价值观，要使用普通pc来完成专业硬件的工作。 Nginx Plus和F5 BIG-IP 110">
+<meta name=keywords content="yongman,思考,人生,技术">
+<meta name=generator content="Hugo 0.91.2">
+<link rel=canonical href=https://xiking.win/2018/11/06/load-balancer-learn/>
+<link rel=icon href=/favicon.ico>
+<link rel=stylesheet href=/sass/jane.min.31c4b7729c8d71cc152f8de4203d90bfd8a04f7eab69372de7234ebf55b7701b.css integrity="sha256-McS3cpyNccwVL43kID2Qv9igT36raTct5yNOv1W3cBs=" media=screen crossorigin=anonymous>
+<link rel=stylesheet href=/css/custom.css>
+<meta property="og:title" content="了解负载均衡">
+<meta property="og:description" content="种类 硬件负载均衡 F5 TP-Link 硬件一般都是定制化，价格比较贵，不太符合互联网公司的价值观，要使用普通pc来完成专业硬件的工作。 Nginx Plus和F5 BIG-IP 110">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xiking.win/2018/11/06/load-balancer-learn/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2018-11-06T19:43:23+00:00">
+<meta property="article:modified_time" content="2018-11-06T19:43:23+00:00">
+<meta itemprop=name content="了解负载均衡">
+<meta itemprop=description content="种类 硬件负载均衡 F5 TP-Link 硬件一般都是定制化，价格比较贵，不太符合互联网公司的价值观，要使用普通pc来完成专业硬件的工作。 Nginx Plus和F5 BIG-IP 110"><meta itemprop=datePublished content="2018-11-06T19:43:23+00:00">
+<meta itemprop=dateModified content="2018-11-06T19:43:23+00:00">
+<meta itemprop=wordCount content="1193">
+<meta itemprop=keywords content><meta name=twitter:card content="summary">
+<meta name=twitter:title content="了解负载均衡">
+<meta name=twitter:description content="种类 硬件负载均衡 F5 TP-Link 硬件一般都是定制化，价格比较贵，不太符合互联网公司的价值观，要使用普通pc来完成专业硬件的工作。 Nginx Plus和F5 BIG-IP 110"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>人生如逆旅，我亦是行人。</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/>首页</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/post/>归档</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/tags/>标签</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/categories/>分类</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/about/>关于</a>
+</li>
+</ul>
+</nav>
+<link rel=stylesheet href=/lib/photoswipe/photoswipe.min.css>
+<link rel=stylesheet href=/lib/photoswipe/default-skin/default-skin.min.css>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div>
+<header id=header class="header container">
+<div class=logo-wrapper>
+<a href=/ class=logo>
+人生如逆旅，我亦是行人。
+</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/>首页</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/post/>归档</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/tags/>标签</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/categories/>分类</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/about/>关于</a>
+</li>
+</ul>
+</nav>
+</header>
+<div id=mobile-panel>
+<main id=main class="main bg-llight wallpaper">
+<div class=content-wrapper>
+<div id=content class="content container">
+<article class="post bg-white">
+<header class=post-header>
+<h1 class=post-title>了解负载均衡</h1>
+<div class=post-meta>
+<time datetime=2018-11-06 class=post-time>
+2018-11-06
+</time>
+<div class=post-category>
+<a href=https://xiking.win/categories/%E6%8A%80%E6%9C%AF%E8%AE%B0%E5%BD%95/> 技术记录 </a>
+</div>
+</div>
+</header>
+<div class=post-content>
+<h3 id=种类>种类</h3>
+<ul>
+<li>
+<p>硬件负载均衡</p>
+<ul>
+<li>F5
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/PwcW9y7.png alt></li>
+<li>TP-Link</li>
+</ul>
+<p>硬件一般都是定制化，价格比较贵，不太符合互联网公司的价值观，要使用普通pc来完成专业硬件的工作。
+<img src=https://raw.githubusercontent.com/yongman/i/img/picgo/BZSD9rv.png alt>
+Nginx Plus和F5 BIG-IP 11050价格对比。</p>
+</li>
+<li>
+<p>软件负载均衡</p>
+<ul>
+<li>四层交换</li>
+<li>七层交换</li>
+</ul>
+</li>
+</ul>
+<h3 id=软件负载均衡>软件负载均衡</h3>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/YP8n8uw.png alt></p>
+<p>软件负载均衡按工作的层次可以分为四层和七层，四层就是工作在OSI的四层，工作在TCP，通过三层IP和四层端口号来进行负载均衡；七层交换处理支持四层负载均衡外，只要分析应用层的信息，比如HTTP协议的URI或者cookie等信息来进行负载。</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/0eBnupo.png alt></p>
+<h4 id=常见的四层均衡>常见的四层均衡</h4>
+<p>四层均衡通过报文中的目标地址和端口，根据配置的负载均衡策略，选择目标服务器。</p>
+<p>以tcp为例，负载均衡在收到第一个赖在客户端的SYN请求时，通过修改报文中的地址修改，直接转发给该服务器。tcp连接的建立，是客户端和服务端直接建立的。</p>
+<ul>
+<li>LVS</li>
+</ul>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/W6aFSwK.png alt></p>
+<p>LVS架构图能看到LVS由三层组成：</p>
+<ol>
+<li>流量入口</li>
+<li>后端server集群</li>
+<li>共享存储</li>
+</ol>
+<p>LVS的几种工作模式：</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/YLB3I0f.png alt>
+<strong>LVS-NAT</strong>：工作机制类似D-NAT，这种模式下所有的流量都需要经过Balancer，容易成为瓶颈。</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/f97NV67.png alt>
+<strong>LVS-DR</strong>：Direct Routing，直接路由，要求Balancer和后端集群在同一个网络环境，需要修改报文中目标的mac地址，然后重新封装，报文中的源ip和目标ip都没有被修改，后端server直接相应客户端，将数据返回，流量不需要经过Balancer，降低Balancer负载。</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/o8KWtPm.png alt>
+<strong>LVS-TUN</strong>：类似DR模式，但是后端server和Balancer不在同一个网络，使用IP隧道封装，通过公网发送给后端server，后端server解析报文后直接相应客户端。</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/wikQxan.png alt>
+LVS的高可用是通过主备来实现的，当主挂掉后会进行主备切换，达到高可用效果。</p>
+<ul>
+<li>Nginx</li>
+</ul>
+<p>Nginx即可作为四层转发，也可以作为七层转发。四层转发tcp配置示例：</p>
+<pre tabindex=0><code>stream {
+  upstream tcp_backend {
+    server srv1.example.com:3306;
+    server srv2.example.com:3306;
+  }
+  server {
+    listen 3306;
+    proxy_pass tcp_backend;
+  }
+}
+</code></pre><ul>
+<li>Seesaw</li>
+</ul>
+<p>基于LVS的负载均衡平台。开源版本非google内部使用版本。</p>
+<h4 id=常见七层均衡>常见七层均衡</h4>
+<ul>
+<li>HAProxy</li>
+</ul>
+<pre tabindex=0><code>listen MaxCDN-HAProxy 10.10.10.10:80
+mode http
+stats enable
+stats uri /haproxy?status
+balance roundrobin
+server Server01 10.10.10.1:80 check
+server Server02 10.10.10.2:80 check
+server Backup   10.10.10.3:80 backup
+</code></pre><p>有多种负载均衡策略，rr、uri、uri parameter等。</p>
+<ul>
+<li>Nginx</li>
+</ul>
+<pre tabindex=0><code>upstream backend1 {
+  # list of servers
+}
+
+upstream backend2 {
+  # list of servers
+}
+
+location /shop {
+  proxy_pass http://backend1;
+}
+
+location /blog {
+  proxy_pass http://backend2;
+}
+</code></pre><p>nginx典型通过uri来进行负载均衡。</p>
+<ul>
+<li>各种应用层proxy，eg. MySQL Proxy</li>
+</ul>
+<p>各种数据库分布式proxy服务，mysql proxy、redis proxy等应用层proxy，通过特定请求数据的进行hash计算，定位后端server，请求对应后端server获取数据后返回给客户端。</p>
+<p>上面的这些负载均衡方式都是有流量单点，如果单点负载达到极限，就需要进行水平扩展，可以使用DNS或者类似的命名服务水平扩展Balancer。</p>
+<p><strong>参考链接</strong></p>
+<ol>
+<li><a href=https://www.nginx.com/blog/5-reasons-switch-f5-big-ip-to-nginx-plus/>5 Reasons to Switch from F5 BIG-IP to NGINX Plus | NGINX</a></li>
+<li><a href=https://www.nginx.com/blog/nginx-plus-vs-f5-big-ip-a-price-performance-comparison/>NGINX Plus vs. F5 BIG‑IP: A Price‑Performance Comparison</a></li>
+<li><a href=https://www.digitalocean.com/community/tutorials/what-is-load-balancing>What is Load Balancing? | DigitalOcean</a></li>
+<li><a href=https://geekflare.com/open-source-load-balancer/>10 Open Source Load Balancer for HA and Improved Performance</a></li>
+<li><a href=http://www.linuxvirtualserver.org/architecture.html>General Architecture of LVS Server Clusters</a></li>
+<li><a href=https://blog.csdn.net/qq_37595946/article/details/77919018>负载均衡集群 LVS 详解（Loadbalancer & LVS）</a></li>
+<li><a href=https://www.nginx.com/resources/glossary/layer-4-load-balancing/>What Is Layer 4 Load Balancing? | NGINX Load Balancer</a></li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>yongman</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2018-11-06
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>License</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<nav class=post-nav>
+<a class=prev href=/2018/11/07/reverse-binary-iteration/>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417l277.93508-310.326815c11.338233-12.190647 11.035334-32.285311-.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"/></svg>
+</i>
+<span class="prev-text nav-default">反向二进制迭代(Reverse Binary Iteration)算法</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/2018/11/05/synology-nas-diy-network/>
+<span class="next-text nav-default">黑群晖Synology DS918+打造个人网络媒体中心</span>
+<span class="prev-text nav-mobile">Next</span>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697c-11.777231-11.500939-30.216186-10.304694-41.178865 2.712784z"/></svg>
+</i>
+</a>
+</nav>
+</footer>
+</article>
+<div class=disqus-comment>
+<div class=disqus-button id=load_disqus onclick=load_disqus()>
+Show Disqus Comments
+</div>
+<div id=disqus_thread></div>
+<script type=text/javascript>var disqus_config=function(){this.page.url="https://xiking.win/2018/11/06/load-balancer-learn/"};function load_disqus(){var a,b;if(window.location.hostname==='localhost')return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='xiking-win',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a),$('#load_disqus').remove()}</script>
+<noscript>Please enable JavaScript to view the
+<a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a>
+</noscript>
+</div>
+</div>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=icon-links>
+<a href=mailto:yming0221@gmail.com rel="me noopener" class=iconfont title=email><svg class="icon" viewBox="0 0 1451 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M664.781909 681.472759.0 97.881301C0 3.997201 71.046997.0 71.046997.0H474.477909 961.649408h399.992405s71.046998 3.997201 71.046998 97.881301L771.345323 681.472759S764.482731 685.154773 753.594283 688.65053V688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858V688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759zm53.281707 130.131124C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633.0 212.052267.0 212.052267V942.809523S0 1024 83.726336 1024H682.532949 753.579947h595.368192C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523V212.052267S893.138176 701.759633 817.019477 767.734955c-39.771477 34.470494-74.671786 43.295855-98.955861 43.868928z"/></svg>
+</a>
+<a href=https://twitter.com/YongXMan rel="me noopener" class=iconfont title=twitter target=_blank><svg class="icon" viewBox="0 0 1264 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M1229.8616 18.043658s-117.852626 63.135335-164.151872 67.344358C960.484169-78.763856 560.627046-7.210476 627.971403 308.466201 278.622548 312.675223 89.216542 47.506814 89.216542 47.506814S-28.636084 236.91282 164.978944 392.646647C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042 50.5082679999998-16.83609 134.688715-143.10676 134.688715-143.10676s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"/></svg>
+</a>
+<a href=https://github.com/yongman rel="me noopener" class=iconfont title=github target=_blank><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M512 12.672c-282.88.0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667.0-12.16-.426667-44.373333-.64-87.04C242.005334 929.664 211.968 830.08 211.968 830.08 188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333.0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333.0.0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667.0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72.0 68.522667-.64 123.562667-.64 140.202666.0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"/></svg>
+</a>
+<a href=https://xiking.win/index.xml rel="noopener alternate" type=application/rss+xml class=iconfont title=rss target=_blank><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"><path d="M819.157333 1024C819.157333 574.592 449.408 204.8.0 204.8V0c561.706667.0 1024 462.293333 1024 1024H819.157333zM140.416 743.04a140.8 140.8.0 01140.501333 140.586667A140.928 140.928.0 01140.074667 1024C62.72 1024 0 961.109333.0 883.626667S62.933333 743.082667 140.416 743.04zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667v-199.04c372.352.0 678.784 306.517333 678.784 678.826667z"/></svg>
+</a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme - <a class=theme-link href=https://github.com/xianmin/hugo-theme-jane>Jane</a>
+</span>
+<span class=copyright-year>
+&copy;
+2018 -
+2022
+<span class=heart>
+<i class=iconfont><svg class="icon" viewBox="0 0 1025 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7.0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1.0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2.0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3.1-42.5-8-83.6-24-122.2z" fill="#8a8a8a"/></svg>
+</i>
+</span><span class=author>
+yongman
+</span></span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35"><path d="M510.866688 227.694839 95.449397 629.218702h235.761562L329.15309 958.01517h362.40389L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777h894.052392v131.813095H63.840492V63.962777zm0 0"/></svg>
+</i>
+</div>
+</div>
+<script type=text/javascript src=/lib/jquery/jquery-3.2.1.min.js></script>
+<script type=text/javascript src=/lib/slideout/slideout-1.0.1.min.js></script>
+<script type=text/javascript src=/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/load-photoswipe.js></script>
+<script type=text/javascript src=/lib/photoswipe/photoswipe.min.js></script>
+<script type=text/javascript src=/lib/photoswipe/photoswipe-ui-default.min.js></script>
+</body>
+</html>

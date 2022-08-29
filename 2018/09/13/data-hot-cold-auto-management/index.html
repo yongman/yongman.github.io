@@ -1,0 +1,416 @@
+<!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<title>冷热数据分离调研和概要方案 - 人生如逆旅，我亦是行人。</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,user-scalable=yes">
+<meta name=MobileOptimized content="width">
+<meta name=HandheldFriendly content="true">
+<meta name=applicable-device content="pc,mobile">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=mobile-web-app-capable content="yes">
+<meta name=author content="yongman">
+<meta name=description content="一. 背景 随着硬件的发展，持久化存储的速度得以提升，但是硬件成本相比内存单位的成本会有大幅度下降，并且全内存缓存存储理想应用场景是随机高速访问">
+<meta name=keywords content="yongman,思考,人生,技术">
+<meta name=generator content="Hugo 0.91.2">
+<link rel=canonical href=https://xiking.win/2018/09/13/data-hot-cold-auto-management/>
+<link rel=icon href=/favicon.ico>
+<link rel=stylesheet href=/sass/jane.min.31c4b7729c8d71cc152f8de4203d90bfd8a04f7eab69372de7234ebf55b7701b.css integrity="sha256-McS3cpyNccwVL43kID2Qv9igT36raTct5yNOv1W3cBs=" media=screen crossorigin=anonymous>
+<link rel=stylesheet href=/css/custom.css>
+<meta property="og:title" content="冷热数据分离调研和概要方案">
+<meta property="og:description" content="一. 背景 随着硬件的发展，持久化存储的速度得以提升，但是硬件成本相比内存单位的成本会有大幅度下降，并且全内存缓存存储理想应用场景是随机高速访问">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xiking.win/2018/09/13/data-hot-cold-auto-management/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2018-09-13T11:36:47+00:00">
+<meta property="article:modified_time" content="2018-09-13T11:36:47+00:00">
+<meta itemprop=name content="冷热数据分离调研和概要方案">
+<meta itemprop=description content="一. 背景 随着硬件的发展，持久化存储的速度得以提升，但是硬件成本相比内存单位的成本会有大幅度下降，并且全内存缓存存储理想应用场景是随机高速访问"><meta itemprop=datePublished content="2018-09-13T11:36:47+00:00">
+<meta itemprop=dateModified content="2018-09-13T11:36:47+00:00">
+<meta itemprop=wordCount content="2837">
+<meta itemprop=keywords content><meta name=twitter:card content="summary">
+<meta name=twitter:title content="冷热数据分离调研和概要方案">
+<meta name=twitter:description content="一. 背景 随着硬件的发展，持久化存储的速度得以提升，但是硬件成本相比内存单位的成本会有大幅度下降，并且全内存缓存存储理想应用场景是随机高速访问"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>人生如逆旅，我亦是行人。</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/>首页</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/post/>归档</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/tags/>标签</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/categories/>分类</a>
+</li><li class=mobile-menu-item>
+<a class=menu-item-link href=https://xiking.win/about/>关于</a>
+</li>
+</ul>
+</nav>
+<link rel=stylesheet href=/lib/photoswipe/photoswipe.min.css>
+<link rel=stylesheet href=/lib/photoswipe/default-skin/default-skin.min.css>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div>
+<header id=header class="header container">
+<div class=logo-wrapper>
+<a href=/ class=logo>
+人生如逆旅，我亦是行人。
+</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/>首页</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/post/>归档</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/tags/>标签</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/categories/>分类</a>
+</li>
+<li class=menu-item>
+<a class=menu-item-link href=https://xiking.win/about/>关于</a>
+</li>
+</ul>
+</nav>
+</header>
+<div id=mobile-panel>
+<main id=main class="main bg-llight wallpaper">
+<div class=content-wrapper>
+<div id=content class="content container">
+<article class="post bg-white">
+<header class=post-header>
+<h1 class=post-title>冷热数据分离调研和概要方案</h1>
+<div class=post-meta>
+<time datetime=2018-09-13 class=post-time>
+2018-09-13
+</time>
+<div class=post-category>
+<a href=https://xiking.win/categories/%E5%AD%98%E5%82%A8/> 存储 </a>
+</div>
+</div>
+</header>
+<div class=post-content>
+<h2 id=一-背景>一. 背景</h2>
+<p>随着硬件的发展，持久化存储的速度得以提升，但是硬件成本相比内存单位的成本会有大幅度下降，并且全内存缓存存储理想应用场景是随机高速访问，而实际的应用场景中，数据访问频率不一致，数据存在冷热区分，热数据放在内存能加速访问，冷数据理应通过一定置换算法，在合适的情况下置换到持久化存储，节省成本。</p>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/CFkzyQJ.png alt></p>
+<h2 id=二-数据冷热分离目标>二. 数据冷热分离目标</h2>
+<p>对数据按访问频率进行统计，有效标记冷热数据，后续访问过程中，根据数据冷热变化，将数据在内存和持久化存储之间移动。</p>
+<ul>
+<li>大幅提升实例容量</li>
+<li>降低单位容量成本</li>
+<li>大部分应用场景可以保证性能</li>
+<li>客户端连接在冷热数据交换时不会互相影响</li>
+</ul>
+<h2 id=三-现有系统调研>三. 现有系统调研</h2>
+<h3 id=31-ssdb>3.1 SSDB</h3>
+<p><img src=https://camo.githubusercontent.com/6f3243b32deae6f762859f3ee91eeeb36f291518/687474703a2f2f737364622e696f2f737364622e706e67 alt></p>
+<ul>
+<li>无冷热数据分离</li>
+<li>底层采用LevelDB或RocksDB引擎</li>
+<li>实现了多种数据结构</li>
+<li>C++实现</li>
+</ul>
+<h3 id=32-ledisdb>3.2 LedisDB</h3>
+<ul>
+<li>无冷热数据分离</li>
+<li>底层采用LevelDB或RocksDB等</li>
+<li>实现了多种数据结构</li>
+<li>Golang实现</li>
+</ul>
+<h3 id=33-pika>3.3 Pika</h3>
+<p><img src=https://camo.githubusercontent.com/01d7f1a580446132eacaca2889c8184279254f89/68747470733a2f2f692e696d6775722e636f6d2f334564646374422e706e67 alt></p>
+<ul>
+<li>无冷热数据分离</li>
+<li>底层采用RocksDB引擎</li>
+<li>使用第三方模块实现多种数据结构</li>
+<li>C++实现</li>
+<li>支持多主模式，无数据一致性保证</li>
+<li>360内部大规模使用</li>
+</ul>
+<h3 id=34-tidis>3.4 Tidis</h3>
+<p><img src=https://github.com/yongman/tidis/raw/master/docs/tidis-arch.png alt></p>
+<ul>
+<li>无冷热数据分离</li>
+<li>底层存储tikv，存储引擎为RocksDB</li>
+<li>支持多种数据结构</li>
+<li>golang实现</li>
+<li>计算存储分离</li>
+<li>水平自动扩展、高可用</li>
+<li>数据更新乐观锁，热点数据更新冲突需要重试</li>
+<li>分布式事务，latancy较高</li>
+</ul>
+<h3 id=35-swapdb>3.5 swapdb</h3>
+<p><img src=https://github.com/JingchengLi/swapdb/raw/master/docs/fundamental.jpg alt></p>
+<ul>
+<li>有冷热数据分离</li>
+<li>定制redis和ssdb服务组合</li>
+<li>ssdb和redis通过socket通信，每次数据调度需要两次网络交互</li>
+<li>冷热数据LFU算法统计</li>
+<li>无规模化应用</li>
+<li>无人维护状态</li>
+</ul>
+<h3 id=36-阿里redis混合存储>3.6 阿里redis混合存储</h3>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/6h7yH3c.png alt></p>
+<ul>
+<li>后端采用定制的rocksdb存储和用户态文件系统，压榨性能</li>
+<li>超过内存阈值，尝试进行持久化key</li>
+<li>异步线程IO处理</li>
+</ul>
+<h3 id=37-redis-enterprise>3.7 redis enterprise</h3>
+<p><img src=https://redislabs.com/wp-content/uploads/2016/07/redis_flash_px.png alt></p>
+<p>两年前提供，官方文档描述的实现和阿里redis混合存储总体一致。</p>
+<h3 id=38-anna>3.8 Anna</h3>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/jXFN7Tn.png alt></p>
+<ul>
+<li>伯克利出品</li>
+<li>冷热数据分离</li>
+<li>不同层次节点相互独立</li>
+<li>通过监控的策略组件对数据进行冷热迁移</li>
+<li>只支持kv</li>
+<li>基于aws部署</li>
+<li>支持热点key流量打散，CRDT数据结构冲突解决</li>
+</ul>
+<h3 id=38-小结>3.8 小结</h3>
+<p>持久化存储容量一般是内存容量的10倍以上，将部分冷数据从内存置换到持久化存储，可以提升单实例所能承载数据量的上限。在存储引擎的计划选择上选择经过大量工程验证的RocksDB，其特性如下：</p>
+<ul>
+<li>暴露参数多，tuning空间大</li>
+<li>LSM Tree，顺序写，对写操作优化</li>
+<li>对SSD友好，避免频繁GC</li>
+<li>大量工程验证，稳定可靠</li>
+<li>写性能很好，并且稳定</li>
+</ul>
+<h2 id=四-冷热分离实现概要>四. 冷热分离实现概要</h2>
+<p>虽然都是快速设备+慢速设备，冷热数据分离与cache场景不同在于：</p>
+<ul>
+<li>冷热数据分离：快设备为主，慢速设备是对快速的设备的扩展。读写都是直接访问快速设备，后台任务将数据部分置换到慢速设备，热数据读取写入速度快。</li>
+<li>cache场景：慢速设备为主，快速设备是对慢速设备中小部分数据的缓存，数据的每次更新需要更新慢速设备和快速设备，热数据只能覆盖读取操作，写入操作慢。</li>
+</ul>
+<p>冷热数据分离整体实现逻辑与redis商业版和阿里混合存储类似。</p>
+<h3 id=41-整体模型>4.1 整体模型</h3>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/AUbxmS9.png alt></p>
+<p>所有的key保存在内存，每个key都保存LFU信息，key的置换策略主要依赖LFU统计信息，将冷数据的value持久化到RocksDB，冷数据通过后台IO线程与RocksDB交互，不阻塞主线程。</p>
+<h3 id=42-线程模型>4.2 线程模型</h3>
+<p><img src=https://raw.githubusercontent.com/yongman/i/img/picgo/3K4Ky4c.png alt></p>
+<h4 id=421-换出冷数据过程>4.2.1 换出冷数据过程：</h4>
+<ol>
+<li>server中增加一个maxhotmemory参数，当内存使用占用超过该配置，server会根据LFU或LRU等信息置换出合适的key；</li>
+<li>将value decode成raw string，封装成异步IO任务，加入任务队列；</li>
+<li>IO线程取出异步任务，将key value存储到RocksDB；</li>
+<li>处理完成后通知主线程，如果在异步线程未处理完成时，访问该key的客户端将加入等待队列；</li>
+<li>主线程收到完成的通知后释放内存中value的内存；</li>
+<li>唤醒等待该key的客户端。</li>
+</ol>
+<h4 id=422-加载冷数据过程>4.2.2 加载冷数据过程：</h4>
+<ol>
+<li>客户端访问的key在置换队列中，需要将客户端加入等待队列；</li>
+<li>访问的数据不在内存中，但是客户端命令类型不需要查询原有value，正常执行；</li>
+<li>否则生成异步IO请求，放入IO队列；</li>
+<li>IO线程取出异步任务，从RocksDB中查询对应的value；</li>
+<li>主线程将value加载到内存；</li>
+<li>唤醒等待该key的客户端。</li>
+</ol>
+<h3 id=43-淘汰机制>4.3 淘汰机制</h3>
+<p>增加maxcoldmemory参数，统计冷数据占用的空间，当maxmemory或maxcoldmemory达到阈值，就执行淘汰策略，与现有保持一致。</p>
+<h3 id=44-持久化>4.4 持久化</h3>
+<p>和原生的redis对比，持久化数据部分分为热数据和冷数据，热数据采用传统的aof或者rdb方式，冷数据采用RocksDB的checkpoint功能。</p>
+<p>Checkpoint功能可以创建一个满足数据一致性的快照。如果snapshot所在的文件系统和DB file所在的文件系统相同的话，SST files会被硬链接，否则，就要全部拷贝过去，manifest和CURRENT files也会被拷贝过去。</p>
+<p>RocksDB中的checkpoint的原理：</p>
+<ol>
+<li>如果snapshot所在的文件系统和DB file所在的文件系统相同的话，SST files被硬链接；</li>
+<li>否则需要进行文件拷贝；</li>
+<li>拷贝manifest文件和CURRETN文件。</li>
+</ol>
+<h3 id=45-同步>4.5 同步</h3>
+<p>同步过程也分为全量数据+增量数据过程。</p>
+<h4 id=451-全量同步>4.5.1 全量同步</h4>
+<p>全量数据又有热数据和冷数据，热数据采用原有RDB加载逻辑进行同步，冷数据需要使用RocksDB的checkpoint功能，采用本地盘情况下，需要对checkpoint的文件进行物理拷贝。</p>
+<ol>
+<li>从对主发起全量同步请求；</li>
+<li>master收到收创建rdb快照和RocksDB checkpoint；</li>
+<li>创建完成后传输rdb和RocksDB checkpoint文件；</li>
+<li>从收到文件后先打开RocksDB，然后加载rdb；</li>
+<li>加载完成后同步增量数据。</li>
+</ol>
+<h4 id=452-增量同步>4.5.2 增量同步</h4>
+<p>采用master异步发送output buffer方式，与现有策略保持一致。</p>
+<h3 id=46-集合类型处理方式>4.6 集合类型处理方式</h3>
+<ul>
+<li>按单key处理</li>
+</ul>
+<ol>
+<li>对集合类型value进行dump操作，生成二进制数据。</li>
+<li>将key和二进制value数据写入RocksDB。</li>
+<li>加载过程相反，读取二进制value，执行restore操作，加载到内存。</li>
+</ol>
+<p>置换逻辑采用和普通key value同样策略，可以复用持久化部分逻辑，对于大集合key不友好，客户端阻塞。</p>
+<ul>
+<li>按item处理</li>
+</ul>
+<p>将不同的数据结构编码为kv结构， 按item存储。</p>
+<ol>
+<li>在内存达到maxhotmemory上限，执行置换策略，如果key是集合，计算将部分item数据置换到RocksDB。</li>
+<li>在一个集合中，key中保存所有item索引，置换到RocksDB的item做上特殊标记。</li>
+<li>访问到特定item，判断item是否在内存中，若不在，RocksDB查询数据加载的内存。</li>
+</ol>
+<p>置换逻辑复杂，各种数据结构单独持久化编码需要实现。</p>
+<p>一期考虑采用单key处理方式，可以增加配置策略，对于大集合不会自动触发数据冷热迁移。</p>
+<p><strong>参考</strong></p>
+<ol>
+<li><a href=https://dzone.com/articles/hybrid-memory-using-ram-amp-flash-in-redis>Running Out of RAM on Redis? No More OOM With Hybrid Memory (RAM and Flash) - DZone Performance</a></li>
+<li><a href=https://redislabs.com/redis-enterprise-documentation/concepts-architecture/memory-architecture/redis-flash/>Redis on Flash Overview - Redis Enterprise Software | Redis Labs</a></li>
+<li><a href=https://dzone.com/articles/your-database-is-wasting-the-ephemeral-drive>Is Your Database Wasting the Ephemeral Drive? - DZone Database</a></li>
+<li><a href=https://www.slideshare.net/RedisLabs/redisconf17-building-large-high-performance-redis-databases-with-redis-enterprise>RedisConf17 - Building Large High Performance Redis Databases with Re…</a></li>
+<li><a href=http://kereno.com/rocksdb-rof.pdf>Optimization of RocksDB for Redis on Flash</a></li>
+<li><a href="https://www.youtube.com/watch?v=xbR0epinnqo">RocksDB: Key-Value Store Optimized for Flash-Based SSD</a></li>
+<li><a href=https://daim.idi.ntnu.no/masteroppgaver/008/8885/masteroppgave.pdf>Evaluation of High Performance
+Key-Value Stores</a></li>
+<li><a href=https://arxiv.org/pdf/1809.00089.pdf>Anna Cluster Paper</a></li>
+<li><a href=https://github.com/Qihoo360/pika>Pika is a nosql compatible with redis</a></li>
+<li><a href=https://medium.com/netflix-techblog/application-data-caching-using-ssds-5bf25df851ef>Application data caching using SSDs – Netflix TechBlog – Medium</a></li>
+<li><a href=https://yq.aliyun.com/articles/582418>Redis混合存储产品与架构介绍-博客-云栖社区-阿里云</a></li>
+<li><a href=https://github.com/facebook/rocksdb/wiki/Checkpoints>Checkpoints · facebook/rocksdb Wiki</a></li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>yongman</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2018-09-13
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>License</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<nav class=post-nav>
+<a class=prev href=/2018/09/20/redis-hot-cold-data-seperation-index/>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417l277.93508-310.326815c11.338233-12.190647 11.035334-32.285311-.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"/></svg>
+</i>
+<span class="prev-text nav-default">Redis冷热数据分离混合存储实现 - index存储</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/2018/09/10/anna-fast-scalable-cost-save-key-value-storage/>
+<span class="next-text nav-default">Anna伯克利高性能可扩展的kv存储系统论文</span>
+<span class="prev-text nav-mobile">Next</span>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697c-11.777231-11.500939-30.216186-10.304694-41.178865 2.712784z"/></svg>
+</i>
+</a>
+</nav>
+</footer>
+</article>
+<div class=disqus-comment>
+<div class=disqus-button id=load_disqus onclick=load_disqus()>
+Show Disqus Comments
+</div>
+<div id=disqus_thread></div>
+<script type=text/javascript>var disqus_config=function(){this.page.url="https://xiking.win/2018/09/13/data-hot-cold-auto-management/"};function load_disqus(){var a,b;if(window.location.hostname==='localhost')return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='xiking-win',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a),$('#load_disqus').remove()}</script>
+<noscript>Please enable JavaScript to view the
+<a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a>
+</noscript>
+</div>
+</div>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=icon-links>
+<a href=mailto:yming0221@gmail.com rel="me noopener" class=iconfont title=email><svg class="icon" viewBox="0 0 1451 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M664.781909 681.472759.0 97.881301C0 3.997201 71.046997.0 71.046997.0H474.477909 961.649408h399.992405s71.046998 3.997201 71.046998 97.881301L771.345323 681.472759S764.482731 685.154773 753.594283 688.65053V688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858V688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759zm53.281707 130.131124C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633.0 212.052267.0 212.052267V942.809523S0 1024 83.726336 1024H682.532949 753.579947h595.368192C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523V212.052267S893.138176 701.759633 817.019477 767.734955c-39.771477 34.470494-74.671786 43.295855-98.955861 43.868928z"/></svg>
+</a>
+<a href=https://twitter.com/YongXMan rel="me noopener" class=iconfont title=twitter target=_blank><svg class="icon" viewBox="0 0 1264 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M1229.8616 18.043658s-117.852626 63.135335-164.151872 67.344358C960.484169-78.763856 560.627046-7.210476 627.971403 308.466201 278.622548 312.675223 89.216542 47.506814 89.216542 47.506814S-28.636084 236.91282 164.978944 392.646647C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042 50.5082679999998-16.83609 134.688715-143.10676 134.688715-143.10676s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"/></svg>
+</a>
+<a href=https://github.com/yongman rel="me noopener" class=iconfont title=github target=_blank><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36"><path d="M512 12.672c-282.88.0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667.0-12.16-.426667-44.373333-.64-87.04C242.005334 929.664 211.968 830.08 211.968 830.08 188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333.0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333.0.0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667.0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72.0 68.522667-.64 123.562667-.64 140.202666.0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"/></svg>
+</a>
+<a href=https://xiking.win/index.xml rel="noopener alternate" type=application/rss+xml class=iconfont title=rss target=_blank><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"><path d="M819.157333 1024C819.157333 574.592 449.408 204.8.0 204.8V0c561.706667.0 1024 462.293333 1024 1024H819.157333zM140.416 743.04a140.8 140.8.0 01140.501333 140.586667A140.928 140.928.0 01140.074667 1024C62.72 1024 0 961.109333.0 883.626667S62.933333 743.082667 140.416 743.04zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667v-199.04c372.352.0 678.784 306.517333 678.784 678.826667z"/></svg>
+</a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme - <a class=theme-link href=https://github.com/xianmin/hugo-theme-jane>Jane</a>
+</span>
+<span class=copyright-year>
+&copy;
+2018 -
+2022
+<span class=heart>
+<i class=iconfont><svg class="icon" viewBox="0 0 1025 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7.0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1.0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2.0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3.1-42.5-8-83.6-24-122.2z" fill="#8a8a8a"/></svg>
+</i>
+</span><span class=author>
+yongman
+</span></span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35"><path d="M510.866688 227.694839 95.449397 629.218702h235.761562L329.15309 958.01517h362.40389L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777h894.052392v131.813095H63.840492V63.962777zm0 0"/></svg>
+</i>
+</div>
+</div>
+<script type=text/javascript src=/lib/jquery/jquery-3.2.1.min.js></script>
+<script type=text/javascript src=/lib/slideout/slideout-1.0.1.min.js></script>
+<script type=text/javascript src=/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/load-photoswipe.js></script>
+<script type=text/javascript src=/lib/photoswipe/photoswipe.min.js></script>
+<script type=text/javascript src=/lib/photoswipe/photoswipe-ui-default.min.js></script>
+</body>
+</html>
