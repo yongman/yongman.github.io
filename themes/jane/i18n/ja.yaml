@@ -1,45 +1,45 @@
 - id: archive
-  translation: Archive
+  translation: アーカイブ
 
 - id: tags
-  translation: Tags
+  translation: タグ
 
 - id: tag
-  translation: "Tag: "
+  translation: "タグ: "
 
 - id: categories
-  translation: Categories
+  translation: カテゴリー
 
 - id: category
-  translation: "Category: "
+  translation: "カテゴリー: "
 
 - id: authors
-  translation: Authors
+  translation: 著者
 
 - id: author_item
-  translation: "Author: "
+  translation: "著者: "
 
 # posts
 - id: prev
-  translation: Prev
+  translation: 前へ
 
 - id: next
-  translation: Next
+  translation: 次へ
 
 - id: prev_post
-  translation: Prev
+  translation: 前へ
 
 - id: next_post
-  translation: Next
+  translation: 次へ
 
 - id: toc
-  translation: Table of Contents
+  translation: 目次
 
 - id: readmore
-  translation: Read more
+  translation: 続きを読む
 
 - id: reward
-  translation: Reward
+  translation: 支援
 
 - id: rewardAlipay
   translation: Alipay
@@ -48,24 +48,24 @@
   translation: Wechat
 
 - id: seeMarkDown
-  translation: The Markdown version »
+  translation: Markdown版 »
 
 - id: loadDisqus
-  translation: Show Disqus Comments
+  translation: Disqusコメントを見る
 
 # posts.header
 - id: wordCount
-  translation: "{{.Count}} words"
+  translation: "{{.Count}} 語"
 
 - id: readingTime
-  translation: "{{.Count}} min read"
+  translation: "{{.Count}} 分程"
 
 # copyright
 - id: author
-  translation: Author
+  translation: 著者
 
 - id: lastMod
-  translation: LastMod
+  translation: 最終更新
 
 - id: markdown
   translation: Markdown
@@ -75,17 +75,17 @@
 
 # counter
 - id: counter_archives
-  translation: "{{.Count}} posts In Total"
+  translation: "全 {{.Count}} 件の投稿"
 
 - id: counter_tagcloud
-  translation: "{{.Count}} Tags In Total"
+  translation: "全 {{.Count}} 件のタグ"
 
 - id: counter_categories
-  translation: "{{.Count}} Categories In Total"
+  translation: "全 {{.Count}} 件のカテゴリー"
 
 # other
 - id: morePost
-  translation: "More Post >>>"
+  translation: "更に読む >>>"
 
 - id: read_ru
   translation: Читать на русском
@@ -109,7 +109,7 @@
   translation: Lese in Deutsch
 
 - id: language
-  translation: Language
+  translation: 言語
 
 - id: comments
-  translation: Comments
+  translation: コメント

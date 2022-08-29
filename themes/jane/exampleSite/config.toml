@@ -56,7 +56,7 @@ defaultContentLanguage = "en"           # Default language to use
 
 [params]
   since = "2017"            # Site creation time          # 站点建立时间
-  homeFullContent = false   # if false, show post summaries on home page. Othewise show full content.
+  homeFullContent = false   # if false, show post summaries on home page. Otherwise show full content.
   rssFullContent = true     # if false, Rss feed instead of the summary
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
@@ -72,7 +72,7 @@ defaultContentLanguage = "en"           # Default language to use
   toc = true                                                                            # 是否开启目录
   photoswipe = true         # see https://github.com/dimsemenov/PhotoSwipe            # 是否启用PhotoSwipe（图片可点击）
   contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
-
+  
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
   customCSS = []            # if ['custom.css'], load '/static/css/custom.css' file
@@ -96,3 +96,7 @@ defaultContentLanguage = "en"           # Default language to use
     o-goodreads = "http://localhost:1313"
     p-coding = "http://localhost:1313"
     q-bilibili = "http://localhost:1313"
+    r-codeforces = "http://localhost:1313"
+    s-mastodon = "http://localhost:1313"
+    t-youtube = "http://localhost:1313"
+    u-twitch = "http://localhost:1313"

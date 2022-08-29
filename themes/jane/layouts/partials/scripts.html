@@ -16,6 +16,7 @@
 <script type="text/javascript" src="{{ $secureJS.RelPermalink }}" integrity="{{ $secureJS.Data.Integrity }}" crossorigin="anonymous"></script>
 <!-- End -->
 
+<!-- Mathjax -->
 {{- if and (or .Params.mathjax (and .Site.Params.mathjax (ne .Params.mathjax false))) (or .IsPage .IsHome) }}
   <script type="text/javascript">
     window.MathJax = {
@@ -25,6 +26,36 @@
   </script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 {{- end }}
+<!-- End -->
+
+<!-- KaTeX -->
+{{- if and (or .Params.katex (and .Site.Params.katex (ne .Params.katex false))) (or .IsPage .IsHome) }}
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css"
+    integrity="sha384-BdGj8xC2eZkQaxoQ8nSLefg4AV4/AwB3Fj+8SUSo7pnKP6Eoy18liIKTPn9oBYNG"
+    crossorigin="anonymous">
+
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js"
+    integrity="sha384-JiKN5O8x9Hhs/UE5cT5AAJqieYlOZbGT3CHws/y97o3ty4R7/O5poG9F3JoiOYw1"
+    crossorigin="anonymous"></script>
+
+  <!-- To automatically render math in text elements, include the auto-render extension: -->
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+    crossorigin="anonymous" onload="renderMathInElement(document.body);">
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        // ...options...
+      });
+    });
+  </script>
+{{- end }}
+<!-- End -->
 
 {{- with .Site.Params.tencent_analytics -}}
 <script id="tencent_analytics">
@@ -211,9 +242,26 @@
   <script id="dsq-count-scr" src="//{{ .Site.DisqusShortname }}.disqus.com/count.js" async></script>
 {{ end }}
 
+{{ if and .Site.Params.remark42Url (or .Page.IsPage .IsHome) }}
+<script>
+  var remark_config = {
+    host: '{{ .Site.Params.remark42Url }}',
+    site_id: '{{ .Site.Params.remark42SiteId | default "remark" }}',
+    components: [
+{{- if .Page.IsPage }}
+	    'embed',
+{{- else if and .Site.Params.commentCount.remark42.enable .IsHome }}
+	    'counter',
+{{- end }}
+    ],
+  }
+  !function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);
+</script>
+{{ end }}
+
 {{ if .Site.Params.search.google.enable }}
   <script>
-    $("#openSearch").click(function(){
+    $("#openSearch, #openSearchMobile").click(function(){
       $(".modal-dialog").addClass("visible");
     });
 
@@ -223,7 +271,7 @@
 
     $(document).click(function(event) {
     //if you click on anything except the modal itself or the "open modal" link, close the modal
-      if (!$(event.target).closest(".modal-content, #openSearch").length) {
+      if (!$(event.target).closest(".modal-content, #openSearch, #openSearchMobile").length) {
         $("body").find(".modal-dialog").removeClass("visible");
       }
     });

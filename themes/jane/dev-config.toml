@@ -6,6 +6,8 @@ baseURL = "https://www.xianmin.org/hugo-theme-jane/"
 enableRobotsTXT = true
 enableEmoji = true
 
+mainSections = ["post"]
+
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
 paginate = 5                                              # 首页每页显示的文章数
 rssLimit = 20             # Limit Entry Count to Rss file # 限制 Rss 文章输出数量
@@ -164,10 +166,6 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
     jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>'
     slideout = '<script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>'
 
-  [params.commento] # Commento is a feature rich lightweight comment system oriented on privacy (https://commento.io/)
-    enable = false
-    url = "http://commento.example.com"
-
   [params.utteranc]         # utteranc is a comment system based on GitHub issues. see https://utteranc.es
     enable = true
     repo = "xianmin/comments-for-hugo-theme-jane"    # The repo to store comments
@@ -177,6 +175,7 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
   [params.search.google]    # google custom search, see https://cse.google.com
     enable = true
     id = "002186711602136249422:q1gkomof_em"
+    title = "Search"
 
   # use public git repo url to link lastmod git commit, enableGitInfo should be true.
   # 指定 git 仓库地址，可以生成指向最近更新的 git commit 的链接，需要将 enableGitInfo 设置成 true.
@@ -207,3 +206,5 @@ defaultContentLanguage = "en"  # Default language to use (if you setup multiling
     o-goodreads = "http://en.xianmin.org/hugo-theme-jane/"
     p-coding = "http://en.xianmin.org/hugo-theme-jane/"
     q-bilibili = "http://en.xianmin.org/hugo-theme-jane/"
+    r-codeforces = "http://en.xianmin.org/hugo-theme-jane/"
+    s-mastodon = "http://en.xianmin.org/hugo-theme-jane/"
