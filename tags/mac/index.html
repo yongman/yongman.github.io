@@ -2,7 +2,7 @@
 <head>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title>Linux中Zero-Copy的实现 - 人生如逆旅，我亦是行人。</title>
+<title>mac · 人生如逆旅，我亦是行人。</title>
 <meta name=renderer content="webkit">
 <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=yes">
 <meta name=MobileOptimized content="width">
@@ -14,26 +14,22 @@
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
 <meta name=mobile-web-app-capable content="yes">
 <meta name=author content="yongman">
-<meta name=description content="1. 读写系统调用 理解什么是zero-copy，首先从简单的例子中，更容易理解。 read(file, tmp_buf, len); write(socket, tmp_buf, len); 上面的例子，实现从文件中读取数据，然后将读取的数据写">
+<meta name=description content="人生如逆旅，我亦是行人。">
 <meta name=keywords content="yongman,思考,人生,技术">
 <meta name=generator content="Hugo 0.91.2">
-<link rel=canonical href=https://xiking.win/2021/10/08/5-linux-zero-copy/>
+<link rel=canonical href=https://xiking.win/tags/mac/>
+<link href=/tags/mac/index.xml rel=alternate type=application/rss+xml title=人生如逆旅，我亦是行人。>
 <link rel=icon href=/favicon.ico>
 <link rel=stylesheet href=/sass/jane.min.31c4b7729c8d71cc152f8de4203d90bfd8a04f7eab69372de7234ebf55b7701b.css integrity="sha256-McS3cpyNccwVL43kID2Qv9igT36raTct5yNOv1W3cBs=" media=screen crossorigin=anonymous>
 <link rel=stylesheet href=/css/custom.css>
-<meta property="og:title" content="Linux中Zero-Copy的实现">
-<meta property="og:description" content="1. 读写系统调用 理解什么是zero-copy，首先从简单的例子中，更容易理解。 read(file, tmp_buf, len); write(socket, tmp_buf, len); 上面的例子，实现从文件中读取数据，然后将读取的数据写">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://xiking.win/2021/10/08/5-linux-zero-copy/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2021-10-08T01:00:00+00:00">
-<meta property="article:modified_time" content="2021-10-08T01:00:00+00:00">
-<meta itemprop=name content="Linux中Zero-Copy的实现">
-<meta itemprop=description content="1. 读写系统调用 理解什么是zero-copy，首先从简单的例子中，更容易理解。 read(file, tmp_buf, len); write(socket, tmp_buf, len); 上面的例子，实现从文件中读取数据，然后将读取的数据写"><meta itemprop=datePublished content="2021-10-08T01:00:00+00:00">
-<meta itemprop=dateModified content="2021-10-08T01:00:00+00:00">
-<meta itemprop=wordCount content="955">
-<meta itemprop=keywords content="linux,kernel,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="Linux中Zero-Copy的实现">
-<meta name=twitter:description content="1. 读写系统调用 理解什么是zero-copy，首先从简单的例子中，更容易理解。 read(file, tmp_buf, len); write(socket, tmp_buf, len); 上面的例子，实现从文件中读取数据，然后将读取的数据写"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<meta property="og:title" content="mac">
+<meta property="og:description" content="人生如逆旅，我亦是行人。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xiking.win/tags/mac/">
+<meta itemprop=name content="mac">
+<meta itemprop=description content="人生如逆旅，我亦是行人。"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="mac">
+<meta name=twitter:description content="人生如逆旅，我亦是行人。"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
 </head>
 <body>
@@ -130,113 +126,21 @@
 <main id=main class="main bg-llight wallpaper">
 <div class=content-wrapper>
 <div id=content class="content container">
-<article class="post bg-white">
-<header class=post-header>
-<h1 class=post-title>Linux中Zero-Copy的实现</h1>
-<div class=post-meta>
-<time datetime=2021-10-08 class=post-time>
-2021-10-08
+<section id=archive class=archive>
+<div class="archive-title tag">
+<h2 class=archive-name>Tag: mac</h2>
+</div>
+<div class=archive-post>
+<time datetime=2023-12-06 class=archive-post-time>
+2023-12-06
 </time>
-<div class=post-category>
-<a href=https://xiking.win/categories/%E6%8A%80%E6%9C%AF%E8%AE%B0%E5%BD%95/> 技术记录 </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<h3 id=1-读写系统调用>1. 读写系统调用</h3>
-<p>理解什么是zero-copy，首先从简单的例子中，更容易理解。</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>read(file, tmp_buf, len);
-write(socket, tmp_buf, len);
-</code></pre></div><p>上面的例子，实现从文件中读取数据，然后将读取的数据写入的网络套接字或者文件中。</p>
-<p><img src=https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20211008172808.png alt></p>
-<p>通过上图中，可以看到，read和write函数会触发对应的读写系统调用，系统调用会执行上下文切换，由用户态切换到内核态，系统调用执行完成后回到用户态继续执行。</p>
-<p>在read和write系统调用中，数据总共发生了4次拷贝。</p>
-<ul>
-<li>DMA将数据从磁盘读取到内核缓冲区</li>
-<li>CPU将数据从内核缓冲区复制到用户缓冲区</li>
-<li>CPU将数据从用户缓冲区复制到内核缓冲区</li>
-<li>DMA将数据从内核缓冲区复制到硬件设备</li>
-</ul>
-<h3 id=2-mmap系统调用>2. mmap系统调用</h3>
-<p>mmap系统调用将文件映射到内存空间，映射完成后，可以按内存访问模式来访问文件。</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>tmp_buf <span style=color:#f92672>=</span> mmap(file, len);
-write(socket, tmp_buf, len);
-</code></pre></div><p><img src=https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20211008173913.png alt></p>
-<p>整个过程中发生了3次拷贝。</p>
-<ul>
-<li>执行mmap时，DMA会将文件中的内容按需复制到内核缓冲区</li>
-<li>由于内核态和用户态mmap是共享的，所以无需将数据再拷贝到用户态</li>
-<li>write系统调用，CPU将数据从内核态直接拷贝到内核态的套接字缓冲区</li>
-<li>DMA将数据从套接字内核缓冲区复制到硬件设备</li>
-</ul>
-<p>对比普通的read和write系统调用，这种方式可以避免数据从内核态到用户态的多次拷贝，mmap+write这种方式需要额外处理文件的并发读写，需要自己进行加锁处理来保证不会在读取的过程中出现别的进程对文件进行truncate操作导致异常。</p>
-<h3 id=3-sendfile系统调用>3. sendfile系统调用</h3>
-<p>从linux kernel 2.1开始，内核实现了sendfile系统调用，简化了数据的发送过程，减少数据的拷贝减少上下文切换。</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>sendfile(socket, file, len);
-</code></pre></div><p><img src=https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20211008181803.png alt></p>
-<ul>
-<li>sendfile系统调用触发DMA将数据复制到内核缓冲区</li>
-<li>CPU将数据从内核态复制到套接字缓冲区</li>
-<li>DMA将数据复制到硬件设备</li>
-</ul>
-<p>完成数据的发送，整个过程中不需要用户进程执行CPU拷贝数据，减少进程上下文切换。</p>
-<p>其实这并不是真正零拷贝技术，因为其实数据从内核态还是依赖CPU进行了数据拷贝，真正的零拷贝是在支持SG-DMA（The scatter-Gather Direct Memory Access）技术，可以进一步减少通过CPU把内核缓冲区里的数据拷贝到socket缓冲区的过程。</p>
-<p>从Linux 2.4版本开始，对于支持SG-DMA技术的情况下，sendfile()系统调用的过程如下：</p>
-<p><img src=https://cdn.jsdelivr.net/gh/yongman/i@img/picgo/20220105230009.png alt></p>
-<p>整个过程完全不需要CPU参与数据拷贝，两次都由DMA直接搬运。</p>
-<p><strong>参考</strong></p>
-<ol>
-<li><a href=https://www.linuxjournal.com/article/6345>https://www.linuxjournal.com/article/6345</a></li>
-<li>图解系统-小林coding</li>
-</ol>
-</div>
-<div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>yongman</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2021-10-08
+<span class=archive-post-title>
+<a href=/2023/12/06/qspace-pro-mac-finder/ class=archive-post-link>
+Mac 下 Finder 替代品 QSpace Pro
+</a>
 </span>
-</p>
-<p class=copyright-item>
-<span class=item-title>License</span>
-<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span>
-</p>
 </div>
-<footer class=post-footer>
-<div class=post-tags>
-<a href=https://xiking.win/tags/linux/>linux</a>
-<a href=https://xiking.win/tags/kernel/>kernel</a>
-</div>
-<nav class=post-nav>
-<a class=prev href=/2023/12/06/qspace-pro-mac-finder/>
-<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417l277.93508-310.326815c11.338233-12.190647 11.035334-32.285311-.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"/></svg>
-</i>
-<span class="prev-text nav-default">Mac 下 Finder 替代品 QSpace Pro</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/2021/06/20/4-use-iptv-in-multiple-devices/>
-<span class="next-text nav-default">电信宽带电视IPTV公网内网多设备播放</span>
-<span class="prev-text nav-mobile">Next</span>
-<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697c-11.777231-11.500939-30.216186-10.304694-41.178865 2.712784z"/></svg>
-</i>
-</a>
-</nav>
-</footer>
-</article>
-<div class=disqus-comment>
-<div class=disqus-button id=load_disqus onclick=load_disqus()>
-Show Disqus Comments
-</div>
-<div id=disqus_thread></div>
-<script type=text/javascript>var disqus_config=function(){this.page.url="https://xiking.win/2021/10/08/5-linux-zero-copy/"};function load_disqus(){var a,b;if(window.location.hostname==='localhost')return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='xiking-win',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a),$('#load_disqus').remove()}</script>
-<noscript>Please enable JavaScript to view the
-<a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a>
-</noscript>
-</div>
+</section>
 </div>
 </div>
 </main>

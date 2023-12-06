@@ -1,4 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>人生如逆旅，我亦是行人。</title><link>https://xiking.win/</link><description>Recent content on 人生如逆旅，我亦是行人。</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>yongman</copyright><lastBuildDate>Fri, 08 Oct 2021 01:00:00 +0000</lastBuildDate><atom:link href="https://xiking.win/index.xml" rel="self" type="application/rss+xml"/><item><title>Linux中Zero-Copy的实现</title><link>https://xiking.win/2021/10/08/5-linux-zero-copy/</link><pubDate>Fri, 08 Oct 2021 01:00:00 +0000</pubDate><guid>https://xiking.win/2021/10/08/5-linux-zero-copy/</guid><description>&lt;h3 id="1-读写系统调用">1. 读写系统调用&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>人生如逆旅，我亦是行人。</title><link>https://xiking.win/</link><description>Recent content on 人生如逆旅，我亦是行人。</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>yongman</copyright><lastBuildDate>Wed, 06 Dec 2023 01:00:00 +0000</lastBuildDate><atom:link href="https://xiking.win/index.xml" rel="self" type="application/rss+xml"/><item><title>Mac 下 Finder 替代品 QSpace Pro</title><link>https://xiking.win/2023/12/06/qspace-pro-mac-finder/</link><pubDate>Wed, 06 Dec 2023 01:00:00 +0000</pubDate><guid>https://xiking.win/2023/12/06/qspace-pro-mac-finder/</guid><description>&lt;p>作为一个长期使用 Mac 的用户，我一直在寻找一款能够比 Finder 做得更好的文件管理工具。最近我发现了 Qspace Pro，它不仅具备 Finder 的基本功能，而且还加入了许多实用的新特性。我特别想和大家分享这款软件的一些亮点：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>丰富的功能&lt;/strong>：Qspace Pro 的界面与 Finder 类似，但提供了更多自定义选项。最吸引我的是它可以直接浏览压缩文件，就像处理普通文件夹一样简单。而且，它还支持连接到各种云服务和服务器，比如 Google Drive, Dropbox, SFTP 等。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>高效的文件操作&lt;/strong>：我特别喜欢它的多布局切换功能。在一个窗口里，我可以轻松地在不同的文件夹之间拖放文件，这大大提高了我的工作效率。另外，它还可以保存我的工作空间，这样我就不用每次都重新打开那么多文件夹了。NAS 管理更加高效，批量文件复制更加稳定和快速。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>便捷的访问和编辑&lt;/strong>：地址栏的快速展开功能和对终端的一键访问非常方便。当我需要对文件进行更深入的操作时，这些功能节省了我很多时间。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>文件哈希值计算&lt;/strong>：作为一个对数据安全性敏感的用户，我很欣赏 Qspace Pro 提供的快速文件哈希值计算功能。它支持多种哈希类型，帮助我验证文件的完整性。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>个性化体验&lt;/strong>：软件支持根据个人习惯自定义按键、菜单和工具栏，这让我感觉就像是专为我量身定制的。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>扩展功能&lt;/strong>：其中的增强型压缩文件浏览和服务器连接功能对我特别有用，让我处理文件时更加得心应手。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>最令人兴奋的是，Qspace Pro 现在的价格是 $13.99（原价 $29.99），而且提供 30 天免费试用。如果你在 3 天内觉得不适合，还可以申请退款。此外，它还提供了一些实用的扩展功能，比如 Stash Shelf 和 Advanced Batch Rename，这些扩展功能现在也在促销，价格只要 $0.99。&lt;/p>
+&lt;p>购买时可以使用邀请码有优惠，超值，如果你需要，可以用邀请码 &lt;code>G5ALAQ&lt;/code> 购买。&lt;/p>
+&lt;p>总的来说，Qspace Pro 绝对是一款值得尝试的 Finder 替代品。它不仅仅是文件管理，更是提升工作效率和个性化体验的利器！&lt;/p></description></item><item><title>Linux中Zero-Copy的实现</title><link>https://xiking.win/2021/10/08/5-linux-zero-copy/</link><pubDate>Fri, 08 Oct 2021 01:00:00 +0000</pubDate><guid>https://xiking.win/2021/10/08/5-linux-zero-copy/</guid><description>&lt;h3 id="1-读写系统调用">1. 读写系统调用&lt;/h3>
 &lt;p>理解什么是zero-copy，首先从简单的例子中，更容易理解。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-c" data-lang="c">read(file, tmp_buf, len);
 write(socket, tmp_buf, len);
