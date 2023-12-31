@@ -1,4 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>人生如逆旅，我亦是行人。</title><link>https://xiking.win/</link><description>Recent content on 人生如逆旅，我亦是行人。</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>yongman</copyright><lastBuildDate>Wed, 06 Dec 2023 01:00:00 +0000</lastBuildDate><atom:link href="https://xiking.win/index.xml" rel="self" type="application/rss+xml"/><item><title>Mac 下 Finder 替代品 QSpace Pro</title><link>https://xiking.win/2023/12/06/qspace-pro-mac-finder/</link><pubDate>Wed, 06 Dec 2023 01:00:00 +0000</pubDate><guid>https://xiking.win/2023/12/06/qspace-pro-mac-finder/</guid><description>&lt;p>作为一个长期使用 Mac 的用户，我一直在寻找一款能够比 Finder 做得更好的文件管理工具。最近我发现了 Qspace Pro，它不仅具备 Finder 的基本功能，而且还加入了许多实用的新特性。我特别想和大家分享这款软件的一些亮点：&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>人生如逆旅，我亦是行人。</title><link>https://xiking.win/</link><description>Recent content on 人生如逆旅，我亦是行人。</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>yongman</copyright><lastBuildDate>Wed, 06 Dec 2023 01:00:00 +0000</lastBuildDate><atom:link href="https://xiking.win/index.xml" rel="self" type="application/rss+xml"/><item><title>OneAPI 充值和使用流程</title><link>https://xiking.win/one-api/</link><pubDate>Sat, 30 Dec 2023 23:58:30 +0000</pubDate><guid>https://xiking.win/one-api/</guid><description>&lt;ol>
+&lt;li>首页点击充值，需要先注册并登录&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/yongman/i/picgo/202401010036126.png" alt="">&lt;/p>
+&lt;p>选择要充值的金额。更多充值金额可以点击。&lt;a href="https://v6.xiking.win:3343">https://v6.xiking.win:3343&lt;/a>&lt;/p>
+&lt;ol start="2">
+&lt;li>填写邮箱获取兑换卡密&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/yongman/i/picgo/202401010047211.png" alt="">&lt;/p>
+&lt;p>订单完成后会自动展示卡密内容。&lt;/p>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/yongman/i/picgo/202401010048920.png" alt="">&lt;/p>
+&lt;ol start="3">
+&lt;li>兑换卡密&lt;/li>
+&lt;/ol>
+&lt;p>点击 &lt;a href="https://v6.xiking.win:3443/topup">https://v6.xiking.win:3443/topup&lt;/a> 充值，输入兑换码点击兑换，充值到账号。&lt;/p>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/yongman/i/picgo/202401010100709.png" alt="">&lt;/p>
+&lt;ol start="4">
+&lt;li>新建令牌 APIKEY&lt;/li>
+&lt;/ol>
+&lt;p>点击 &lt;a href="https://v6.xiking.win:3443/token">https://v6.xiking.win:3443/token&lt;/a> 新建令牌，也就是 APIKEY，可以创建多个令牌区分不同的应用。创建成功后点击对应令牌后面的复制即可复制令牌到剪贴板。&lt;/p>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/yongman/i/picgo/202401010102529.png" alt="">&lt;/p>
+&lt;ol start="5">
+&lt;li>接入应用，修改接入域名和 APIKEY&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>接口地址：&lt;/li>
+&lt;/ul>
+&lt;p>请把官方的API接口域名 &lt;code>api.openai.com&lt;/code> 更换为 &lt;code>v6.xiking.win:3443&lt;/code> 即 &lt;code>https://v6.xiking.win:3443/v1/chat/completions&lt;/code>&lt;/p>
+&lt;p>请求参数同 OpenAI 官网 API 文档一致。&lt;/p>
+&lt;ul>
+&lt;li>APIKEY获取：&lt;/li>
+&lt;/ul>
+&lt;p>APIKEY 就是步骤4中获取到的令牌。&lt;/p></description></item><item><title>Mac 下 Finder 替代品 QSpace Pro</title><link>https://xiking.win/2023/12/06/qspace-pro-mac-finder/</link><pubDate>Wed, 06 Dec 2023 01:00:00 +0000</pubDate><guid>https://xiking.win/2023/12/06/qspace-pro-mac-finder/</guid><description>&lt;p>作为一个长期使用 Mac 的用户，我一直在寻找一款能够比 Finder 做得更好的文件管理工具。最近我发现了 Qspace Pro，它不仅具备 Finder 的基本功能，而且还加入了许多实用的新特性。我特别想和大家分享这款软件的一些亮点：&lt;/p>
 &lt;ol>
 &lt;li>
 &lt;p>&lt;strong>丰富的功能&lt;/strong>：Qspace Pro 的界面与 Finder 类似，但提供了更多自定义选项。最吸引我的是它可以直接浏览压缩文件，就像处理普通文件夹一样简单。而且，它还支持连接到各种云服务和服务器，比如 Google Drive, Dropbox, SFTP 等。&lt;/p>
