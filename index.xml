@@ -1,4 +1,86 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>人生如逆旅，我亦是行人。</title><link>https://xiking.win/</link><description>Recent content on 人生如逆旅，我亦是行人。</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>yongman</copyright><lastBuildDate>Wed, 06 Dec 2023 01:00:00 +0000</lastBuildDate><atom:link href="https://xiking.win/index.xml" rel="self" type="application/rss+xml"/><item><title>OneAPI 充值和使用流程</title><link>https://xiking.win/one-api/</link><pubDate>Sat, 30 Dec 2023 23:58:30 +0000</pubDate><guid>https://xiking.win/one-api/</guid><description>&lt;ol>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>人生如逆旅，我亦是行人。</title><link>https://xiking.win/</link><description>Recent content on 人生如逆旅，我亦是行人。</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>yongman</copyright><lastBuildDate>Mon, 09 Sep 2024 23:53:38 +0000</lastBuildDate><atom:link href="https://xiking.win/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenVPN server 反向访问 client 端局域网</title><link>https://xiking.win/2024/09/09/openvpn-reverse-proxy/</link><pubDate>Mon, 09 Sep 2024 23:53:38 +0000</pubDate><guid>https://xiking.win/2024/09/09/openvpn-reverse-proxy/</guid><description>&lt;h2 id="1-背景需求">1. 背景需求&lt;/h2>
+&lt;p>需求是内网穿透，想把本地局域网和国外的 VPS 主机组成局域网，连接 OpenVPN 后，VPS 主机可以直接访问本地局域网，如 &lt;code>192.168.31.1/24&lt;/code>，并且由于 VPS 拥有稳定的 IP，所以请求的链路是 OpenVPN server 端访问 client 端的局域网。使用 &lt;code>zerotier&lt;/code> 也能实现这种需求，但是最近不太稳定，大概是因为运营商对 UDP 执行 QoS 导致丢包严重，所以要使用 TCP 协议来建立隧道。&lt;/p>
+&lt;h2 id="2-安装-openvpn">2. 安装 OpenVPN&lt;/h2>
+&lt;p>分别在服务端和本地机器一键安装 OpenVPN，脚本开源，无黑科技，可放心使用。&lt;/p>
+&lt;pre tabindex="0">&lt;code>wget https://git.io/vpn -O openvpn-install.sh &amp;amp;&amp;amp; sudo bash openvpn-install.sh
+&lt;/code>&lt;/pre>&lt;p>按照提示一步一步安装，需要注意的是，安装的时候选择 TCP 协议。&lt;/p>
+&lt;h2 id="3-配置-server-端">3. 配置 Server 端&lt;/h2>
+&lt;p>在上面的脚本安装完成后，配置和证书等繁琐配置已经自动安装完成，只需调整一下配置。&lt;/p>
+&lt;h3 id="在-linux-系统中可以使用以下命令启用-ip-转发">在 Linux 系统中，可以使用以下命令启用 IP 转发：&lt;/h3>
+&lt;pre tabindex="0">&lt;code>sysctl -w net.ipv4.ip_forward=1
+&lt;/code>&lt;/pre>&lt;p>永久启用 IP 转发，需要修改 /etc/sysctl.conf 文件，取消以下行的注释：&lt;/p>
+&lt;pre tabindex="0">&lt;code>net.ipv4.ip_forward=1
+&lt;/code>&lt;/pre>&lt;h3 id="更新-serverconf-配置">更新 server.conf 配置&lt;/h3>
+&lt;pre tabindex="0">&lt;code>local 172.24.10.88 #local 是 server 的本地局域网地址
+port 12294
+proto tcp
+dev tun
+ca ca.crt
+cert server.crt
+key server.key
+dh dh.pem
+auth SHA512
+tls-crypt tc.key
+topology subnet
+push &amp;quot;route 172.24.10.88 255.255.255.255&amp;quot; # 向客户端推送本地局域网的路由，客户端访问 172.24.10.88 会走 vpn 网络
+route 192.168.31.0 255.255.255.0
+server 10.8.0.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+keepalive 10 120
+user nobody
+group nogroup
+persist-key
+persist-tun
+verb 3
+crl-verify crl.pem
+client-config-dir /etc/openvpn/server/ccd # 客户端配置文件，注意具体的配置文件名需要和安装时填写的 client 一致。
+&lt;/code>&lt;/pre>&lt;h3 id="ccd-文件配置">CCD 文件配置&lt;/h3>
+&lt;pre tabindex="0">&lt;code>ifconfig-push 10.8.0.2 255.255.255.0 # 向客户端推送路由配置，配置客户端的 IP 地址
+iroute 192.168.31.0 255.255.255.0 # 这条指令用于在 OpenVPN 服务器上声明客户端可以路由到的内部网络。通过这条指令，OpenVPN 服务器知道应该将发往 192.168.31.0/24 网络的流量通过该客户端进行路由。
+&lt;/code>&lt;/pre>&lt;h3 id="重新启动服务端">重新启动服务端&lt;/h3>
+&lt;pre tabindex="0">&lt;code>sudo service openvpn-server@server restart
+&lt;/code>&lt;/pre>&lt;h2 id="4-配置客户端">4. 配置客户端&lt;/h2>
+&lt;h3 id="开启-ip-内核转发">开启 IP 内核转发&lt;/h3>
+&lt;p>用于通过该机器访问局域网的其他机器&lt;/p>
+&lt;h3 id="配置调整">配置调整&lt;/h3>
+&lt;p>直接复制在 2 安装完成后生成的客户端配置，然后稍微进行调整&lt;/p>
+&lt;pre tabindex="0">&lt;code>client
+dev tun
+proto tcp
+remote vps-ip port
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+auth SHA512
+ignore-unknown-option block-outside-dns
+push &amp;quot;route 192.168.31.0 255.255.255.0&amp;quot; # 给服务推送路由，把本地局域网网段推送给 server 端，server 访问改网段会通过 vpn 转发给本客户端
+verb 3
+&amp;lt;ca&amp;gt;
+-----BEGIN CERTIFICATE-----
+x
+-----END CERTIFICATE-----
+&amp;lt;/ca&amp;gt;
+&amp;lt;cert&amp;gt;
+-----BEGIN CERTIFICATE-----
+x
+-----END CERTIFICATE-----
+&amp;lt;/cert&amp;gt;
+&amp;lt;key&amp;gt;
+-----BEGIN PRIVATE KEY-----
+x
+-----END PRIVATE KEY-----
+&amp;lt;/key&amp;gt;
+&amp;lt;tls-crypt&amp;gt;
+-----BEGIN OpenVPN Static key V1-----
+x
+-----END OpenVPN Static key V1-----
+&amp;lt;/tls-crypt&amp;gt;
+&lt;/code>&lt;/pre>&lt;h3 id="启动客户端">启动客户端&lt;/h3>
+&lt;pre tabindex="0">&lt;code>sudo openvpn --config /etc/openvpn/client/aws.ovpn --log-append /var/log/openvpn.log
+&lt;/code>&lt;/pre>&lt;h2 id="验证">验证&lt;/h2>
+&lt;p>在服务端执行 &lt;code>ping 192.168.31.1&lt;/code> 能够访问，配置成功。&lt;/p></description></item><item><title>OneAPI 充值和使用流程</title><link>https://xiking.win/one-api/</link><pubDate>Sat, 30 Dec 2023 23:58:30 +0000</pubDate><guid>https://xiking.win/one-api/</guid><description>&lt;ol>
 &lt;li>首页点击充值，需要先注册并登录&lt;/li>
 &lt;/ol>
 &lt;p>&lt;img src="https://raw.githubusercontent.com/yongman/i/picgo/202401010036126.png" alt="">&lt;/p>

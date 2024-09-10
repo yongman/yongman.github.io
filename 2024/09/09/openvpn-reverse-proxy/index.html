@@ -2,7 +2,7 @@
 <head>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title>LevelDB中snapshot和compaction - 人生如逆旅，我亦是行人。</title>
+<title>OpenVPN server 反向访问 client 端局域网 - 人生如逆旅，我亦是行人。</title>
 <meta name=renderer content="webkit">
 <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=yes">
 <meta name=MobileOptimized content="width">
@@ -14,26 +14,26 @@
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
 <meta name=mobile-web-app-capable content="yes">
 <meta name=author content="yongman">
-<meta name=description content="本文简单记录了leveldb中有关key的种类、memtable的操作、snapshot的原理和Compaction。 Key LookupKey: klength|UserKey|tag InternalKey: UserKey">
+<meta name=description content="1. 背景需求 需求是内网穿透，想把本地局域网和国外的 VPS 主机组成局域网，连接 OpenVPN 后，VPS 主机可以直接访问本地局域网，如 192.168.31.1/2">
 <meta name=keywords content="yongman,思考,人生,技术">
 <meta name=generator content="Hugo 0.91.2">
-<link rel=canonical href=https://xiking.win/2018/08/03/leveldb-key-snapshot-compaction/>
+<link rel=canonical href=https://xiking.win/2024/09/09/openvpn-reverse-proxy/>
 <link rel=icon href=/favicon.ico>
 <link rel=stylesheet href=/sass/jane.min.31c4b7729c8d71cc152f8de4203d90bfd8a04f7eab69372de7234ebf55b7701b.css integrity="sha256-McS3cpyNccwVL43kID2Qv9igT36raTct5yNOv1W3cBs=" media=screen crossorigin=anonymous>
 <link rel=stylesheet href=/css/custom.css>
-<meta property="og:title" content="LevelDB中snapshot和compaction">
-<meta property="og:description" content="本文简单记录了leveldb中有关key的种类、memtable的操作、snapshot的原理和Compaction。 Key LookupKey: klength|UserKey|tag InternalKey: UserKey">
+<meta property="og:title" content="OpenVPN server 反向访问 client 端局域网">
+<meta property="og:description" content="1. 背景需求 需求是内网穿透，想把本地局域网和国外的 VPS 主机组成局域网，连接 OpenVPN 后，VPS 主机可以直接访问本地局域网，如 192.168.31.1/2">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://xiking.win/2018/08/03/leveldb-key-snapshot-compaction/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2018-08-03T19:23:54+00:00">
-<meta property="article:modified_time" content="2018-08-03T19:23:54+00:00">
-<meta itemprop=name content="LevelDB中snapshot和compaction">
-<meta itemprop=description content="本文简单记录了leveldb中有关key的种类、memtable的操作、snapshot的原理和Compaction。 Key LookupKey: klength|UserKey|tag InternalKey: UserKey"><meta itemprop=datePublished content="2018-08-03T19:23:54+00:00">
-<meta itemprop=dateModified content="2018-08-03T19:23:54+00:00">
-<meta itemprop=wordCount content="1549">
+<meta property="og:url" content="https://xiking.win/2024/09/09/openvpn-reverse-proxy/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2024-09-09T23:53:38+00:00">
+<meta property="article:modified_time" content="2024-09-09T23:53:38+00:00">
+<meta itemprop=name content="OpenVPN server 反向访问 client 端局域网">
+<meta itemprop=description content="1. 背景需求 需求是内网穿透，想把本地局域网和国外的 VPS 主机组成局域网，连接 OpenVPN 后，VPS 主机可以直接访问本地局域网，如 192.168.31.1/2"><meta itemprop=datePublished content="2024-09-09T23:53:38+00:00">
+<meta itemprop=dateModified content="2024-09-09T23:53:38+00:00">
+<meta itemprop=wordCount content="770">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
-<meta name=twitter:title content="LevelDB中snapshot和compaction">
-<meta name=twitter:description content="本文简单记录了leveldb中有关key的种类、memtable的操作、snapshot的原理和Compaction。 Key LookupKey: klength|UserKey|tag InternalKey: UserKey"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<meta name=twitter:title content="OpenVPN server 反向访问 client 端局域网">
+<meta name=twitter:description content="1. 背景需求 需求是内网穿透，想把本地局域网和国外的 VPS 主机组成局域网，连接 OpenVPN 后，VPS 主机可以直接访问本地局域网，如 192.168.31.1/2"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
 </head>
 <body>
@@ -132,49 +132,100 @@
 <div id=content class="content container">
 <article class="post bg-white">
 <header class=post-header>
-<h1 class=post-title>LevelDB中snapshot和compaction</h1>
+<h1 class=post-title>OpenVPN server 反向访问 client 端局域网</h1>
 <div class=post-meta>
-<time datetime=2018-08-03 class=post-time>
-2018-08-03
+<time datetime=2024-09-09 class=post-time>
+2024-09-09
 </time>
 <div class=post-category>
-<a href=https://xiking.win/categories/%E5%AD%98%E5%82%A8/> 存储 </a>
+<a href=https://xiking.win/categories/> [生命不息] </a>
 </div>
 </div>
 </header>
 <div class=post-content>
-<p>本文简单记录了leveldb中有关key的种类、memtable的操作、snapshot的原理和Compaction。</p>
-<h3 id=key>Key</h3>
-<ul>
-<li>LookupKey: <code>klength|UserKey|tag</code></li>
-<li>InternalKey: <code>UserKey|tag</code>，其中tag部分包括<code>SequenceNumber</code>和<code>ValueType</code></li>
-<li>ParsedInternalKey: 包含<code>UserKey</code>、<code>SequenceNumber</code>和<code>ValueType</code></li>
-<li>UserKey：用户存储的原始key</li>
-</ul>
-<p><code>userkey添加tag信息=>InternalKey 增加key长度=>LookupKey</code></p>
-<h3 id=memtable>Memtable</h3>
-<p>Memtable只提供了Get和Add，因为LevelDB的更新操作全部是追加写，包括delete操作。</p>
-<p>Add操作的流程是先根据userKey和sequenceNumber生成InternalKey，然后插入skiplist。</p>
-<p>Get操作流程是先根据传入的lookupKey从skiplist查找，查找到读取对应的value并解析tag，是<code>kTypeValue</code>就返回对应的value，是<code>kTypeDeletion</code>就返回NotFound。</p>
-<h3 id=snapshot>Snapshot</h3>
-<p>snapshot在LevelDB中的存在形式就是一个严格递增的SequenceNumber，LevelDB中最新的snapshot保存在
-<code>versions_->LastSequence()</code>中。</p>
-<p>userKey编码成Internalkey时，在userkey后面跟着sequenceNumber，同一个userKey的多个版本数据天然按新旧进行排序，当查看指定的snapshot版本的数据时，生成带有sequenceNumber的lookupKey，查找不大于指定snapshot版本的最大数据即可。</p>
-<h3 id=compaction>Compaction</h3>
-<p>LevelDB中有两种类型compaction，Minor compaction和Major compaction。Compaction是后台线程来调度，读写线程中更新compaction统计信息，判断是否需要进行compaction，如果需要进行compaction就创建任务，加入任务队列。</p>
-<ul>
-<li>Minor compaction</li>
-</ul>
-<p>后台任务检测到存在immutable memtable时，就会触发CompactMemTable，首先对currentVersion进行加引用，然后由versionSet生成一个新的sst file并dump数据到sst file，然后选择给sst file所放置的level。</p>
-<p>一般情况下memtable dump的sst file都放在0 level，但是当第0层中的所有sst file都不包含memtable中的key的range，这时可以直接将该sst放在更高一层，尽可能的减少major compaction。</p>
-<p>新生成的sst file以及其所在level都会记录在本次的versionEdit对象中，然后将该versionEdit应用在currentVersion生成新的version，最后将该versionEdit持久化到manifest文件。</p>
-<ul>
-<li>Major compaction</li>
-</ul>
-<p>major compaction过程的细节比较多，作者的设计思想也是尽量做有必要的，尽可能优化性能，还需细细研究。</p>
-<p>major compaction也可以手动触发，多数情况还是进行自动触发的。自动触发会根据平时的统计信息来决定什么时候对哪个level的哪个sst file进行comapction操作。</p>
-<p>Level 0的sst file是最特殊的，sst file中的key range可以相互重叠，也就是给定一个key，这个key可能存在sst file中的任意一个或多个中，所以Level 0会做特殊处理。通过pickCompaction创建compaction任务，然后执行compaction。</p>
-<p>LevelDB的简洁得益于它的抽象，比如多个文件的合并操作，在上层只需要创建多个文件的迭代器，就可以按key有序遍历数据，极大简化上层的调用。</p>
+<h2 id=1-背景需求>1. 背景需求</h2>
+<p>需求是内网穿透，想把本地局域网和国外的 VPS 主机组成局域网，连接 OpenVPN 后，VPS 主机可以直接访问本地局域网，如 <code>192.168.31.1/24</code>，并且由于 VPS 拥有稳定的 IP，所以请求的链路是 OpenVPN server 端访问 client 端的局域网。使用 <code>zerotier</code> 也能实现这种需求，但是最近不太稳定，大概是因为运营商对 UDP 执行 QoS 导致丢包严重，所以要使用 TCP 协议来建立隧道。</p>
+<h2 id=2-安装-openvpn>2. 安装 OpenVPN</h2>
+<p>分别在服务端和本地机器一键安装 OpenVPN，脚本开源，无黑科技，可放心使用。</p>
+<pre tabindex=0><code>wget https://git.io/vpn -O openvpn-install.sh &amp;&amp; sudo bash openvpn-install.sh
+</code></pre><p>按照提示一步一步安装，需要注意的是，安装的时候选择 TCP 协议。</p>
+<h2 id=3-配置-server-端>3. 配置 Server 端</h2>
+<p>在上面的脚本安装完成后，配置和证书等繁琐配置已经自动安装完成，只需调整一下配置。</p>
+<h3 id=在-linux-系统中可以使用以下命令启用-ip-转发>在 Linux 系统中，可以使用以下命令启用 IP 转发：</h3>
+<pre tabindex=0><code>sysctl -w net.ipv4.ip_forward=1
+</code></pre><p>永久启用 IP 转发，需要修改 /etc/sysctl.conf 文件，取消以下行的注释：</p>
+<pre tabindex=0><code>net.ipv4.ip_forward=1
+</code></pre><h3 id=更新-serverconf-配置>更新 server.conf 配置</h3>
+<pre tabindex=0><code>local 172.24.10.88 #local 是 server 的本地局域网地址
+port 12294
+proto tcp
+dev tun
+ca ca.crt
+cert server.crt
+key server.key
+dh dh.pem
+auth SHA512
+tls-crypt tc.key
+topology subnet
+push &quot;route 172.24.10.88 255.255.255.255&quot; # 向客户端推送本地局域网的路由，客户端访问 172.24.10.88 会走 vpn 网络
+route 192.168.31.0 255.255.255.0
+server 10.8.0.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+keepalive 10 120
+user nobody
+group nogroup
+persist-key
+persist-tun
+verb 3
+crl-verify crl.pem
+client-config-dir /etc/openvpn/server/ccd # 客户端配置文件，注意具体的配置文件名需要和安装时填写的 client 一致。
+</code></pre><h3 id=ccd-文件配置>CCD 文件配置</h3>
+<pre tabindex=0><code>ifconfig-push 10.8.0.2 255.255.255.0 # 向客户端推送路由配置，配置客户端的 IP 地址
+iroute 192.168.31.0 255.255.255.0 # 这条指令用于在 OpenVPN 服务器上声明客户端可以路由到的内部网络。通过这条指令，OpenVPN 服务器知道应该将发往 192.168.31.0/24 网络的流量通过该客户端进行路由。
+</code></pre><h3 id=重新启动服务端>重新启动服务端</h3>
+<pre tabindex=0><code>sudo service openvpn-server@server restart
+</code></pre><h2 id=4-配置客户端>4. 配置客户端</h2>
+<h3 id=开启-ip-内核转发>开启 IP 内核转发</h3>
+<p>用于通过该机器访问局域网的其他机器</p>
+<h3 id=配置调整>配置调整</h3>
+<p>直接复制在 2 安装完成后生成的客户端配置，然后稍微进行调整</p>
+<pre tabindex=0><code>client
+dev tun
+proto tcp
+remote vps-ip port
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+auth SHA512
+ignore-unknown-option block-outside-dns
+push &quot;route 192.168.31.0 255.255.255.0&quot; # 给服务推送路由，把本地局域网网段推送给 server 端，server 访问改网段会通过 vpn 转发给本客户端
+verb 3
+&lt;ca&gt;
+-----BEGIN CERTIFICATE-----
+x
+-----END CERTIFICATE-----
+&lt;/ca&gt;
+&lt;cert&gt;
+-----BEGIN CERTIFICATE-----
+x
+-----END CERTIFICATE-----
+&lt;/cert&gt;
+&lt;key&gt;
+-----BEGIN PRIVATE KEY-----
+x
+-----END PRIVATE KEY-----
+&lt;/key&gt;
+&lt;tls-crypt&gt;
+-----BEGIN OpenVPN Static key V1-----
+x
+-----END OpenVPN Static key V1-----
+&lt;/tls-crypt&gt;
+</code></pre><h3 id=启动客户端>启动客户端</h3>
+<pre tabindex=0><code>sudo openvpn --config /etc/openvpn/client/aws.ovpn --log-append /var/log/openvpn.log
+</code></pre><h2 id=验证>验证</h2>
+<p>在服务端执行 <code>ping 192.168.31.1</code> 能够访问，配置成功。</p>
 </div>
 <div class=post-copyright>
 <p class=copyright-item>
@@ -184,7 +235,7 @@
 <p class=copyright-item>
 <span class=item-title>LastMod</span>
 <span class=item-content>
-2018-08-03
+2024-09-09
 </span>
 </p>
 <p class=copyright-item>
@@ -194,14 +245,8 @@
 </div>
 <footer class=post-footer>
 <nav class=post-nav>
-<a class=prev href=/2018/08/06/forward-proxy-and-reverse-proxy/>
-<i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417l277.93508-310.326815c11.338233-12.190647 11.035334-32.285311-.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"/></svg>
-</i>
-<span class="prev-text nav-default">正向代理和反向代理</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/2018/08/01/leveldb-mvcc-read-write-put-delete/>
-<span class="next-text nav-default">LevelDB版本管理和读写操作</span>
+<a class=next href=/2023/12/06/qspace-pro-mac-finder/>
+<span class="next-text nav-default">Mac 下 Finder 替代品 QSpace Pro</span>
 <span class="prev-text nav-mobile">Next</span>
 <i class=iconfont><svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697c-11.777231-11.500939-30.216186-10.304694-41.178865 2.712784z"/></svg>
 </i>
@@ -214,7 +259,7 @@
 Show Disqus Comments
 </div>
 <div id=disqus_thread></div>
-<script type=text/javascript>var disqus_config=function(){this.page.url="https://xiking.win/2018/08/03/leveldb-key-snapshot-compaction/"};function load_disqus(){var a,b;if(window.location.hostname==='localhost')return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='xiking-win',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a),$('#load_disqus').remove()}</script>
+<script type=text/javascript>var disqus_config=function(){this.page.url="https://xiking.win/2024/09/09/openvpn-reverse-proxy/"};function load_disqus(){var a,b;if(window.location.hostname==='localhost')return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='xiking-win',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a),$('#load_disqus').remove()}</script>
 <noscript>Please enable JavaScript to view the
 <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a>
 </noscript>
