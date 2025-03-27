@@ -80,7 +80,10 @@ x
 &lt;/code>&lt;/pre>&lt;h3 id="启动客户端">启动客户端&lt;/h3>
 &lt;pre tabindex="0">&lt;code>sudo openvpn --config /etc/openvpn/client/aws.ovpn --log-append /var/log/openvpn.log
 &lt;/code>&lt;/pre>&lt;h2 id="验证">验证&lt;/h2>
-&lt;p>在服务端执行 &lt;code>ping 192.168.31.1&lt;/code> 能够访问，配置成功。&lt;/p></description></item><item><title>OneAPI 充值和使用流程</title><link>https://xiking.win/one-api/</link><pubDate>Sat, 30 Dec 2023 23:58:30 +0000</pubDate><guid>https://xiking.win/one-api/</guid><description>&lt;ol>
+&lt;p>在服务端执行 &lt;code>ping 192.168.31.1&lt;/code> 能够访问，配置成功。&lt;/p>
+&lt;p>如果还是无法访问，还需要在客户端机器上开 IP 地址伪装。&lt;/p>
+&lt;pre tabindex="0">&lt;code>iptables -t nat -A POSTROUTING -j MASQUERADE -o ens192
+&lt;/code>&lt;/pre></description></item><item><title>OneAPI 充值和使用流程</title><link>https://xiking.win/one-api/</link><pubDate>Sat, 30 Dec 2023 23:58:30 +0000</pubDate><guid>https://xiking.win/one-api/</guid><description>&lt;ol>
 &lt;li>首页点击充值，需要先注册并登录&lt;/li>
 &lt;/ol>
 &lt;p>&lt;img src="https://raw.githubusercontent.com/yongman/i/picgo/202401010036126.png" alt="">&lt;/p>
