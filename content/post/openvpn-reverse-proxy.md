@@ -131,3 +131,9 @@ sudo openvpn --config /etc/openvpn/client/aws.ovpn --log-append /var/log/openvpn
 ## 验证
 
 在服务端执行 `ping 192.168.31.1` 能够访问，配置成功。
+
+如果还是无法访问，还需要在客户端机器上开 IP 地址伪装。
+
+```
+iptables -t nat -A POSTROUTING -j MASQUERADE -o ens192
+```
